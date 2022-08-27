@@ -33,3 +33,4 @@ public class Review extends BaseTimeEntity {
     private Member target;
 
 }
+
