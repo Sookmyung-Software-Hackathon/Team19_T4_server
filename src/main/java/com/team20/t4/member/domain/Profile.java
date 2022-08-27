@@ -21,7 +21,7 @@ public class Profile {
     private String name;
 
     @Column(name = "birth_year")
-    private LocalDate birthYear;
+    private String birthYear;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sex")
@@ -34,7 +34,7 @@ public class Profile {
 
 
     @Builder
-    public Profile(String name, LocalDate birthYear, Sex sex, String mbti, String introduction, Float score) {
+    public Profile(String name, String birthYear, Sex sex, String mbti, String introduction, Float score) {
         this.name = name;
         this.birthYear = birthYear;
         this.sex = sex;
@@ -46,6 +46,16 @@ public class Profile {
     // update //
     public Profile updateName(String newName){
         this.name = newName;
+        return this;
+    }
+
+    public Profile updateMbti(String newMbti) {
+        this.mbti = newMbti;
+        return this;
+    }
+
+    public Profile updateIntroduction(String newIntroduction) {
+        this.introduction = newIntroduction;
         return this;
     }
 }

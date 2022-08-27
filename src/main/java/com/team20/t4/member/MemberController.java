@@ -35,10 +35,10 @@ public class MemberController {
         return memberService.getMemberInfo();
     }
 
-    @PostMapping("/member/info/name")
-    public OnlyResponseString updateMemberName(@RequestBody @Valid UserNameUpdateRequestDto requestDto){
-        memberService.updateMemberName(requestDto.getNewName());
-        return new OnlyResponseString("회원 이름 수정에 성공했습니다.");
+    @PostMapping("/member/info/profile")
+    public OnlyResponseString updateMemberProfile(@RequestBody @Valid MemberProfileUpdateRequestDto requestDto){
+        memberService.updateMemberProfile(requestDto);
+        return new OnlyResponseString("회원 정보 수정에 성공했습니다.");
     }
     
     @PostMapping("/member/info/profile-image")
