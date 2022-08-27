@@ -5,6 +5,7 @@ import com.team20.t4.post.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -33,15 +34,19 @@ public class Plan {
     @Min(1) @Max(10)
     private Integer numOfParticipants;
 
+    @Setter
     @Column(name = "appointment_time", nullable = false)
     private LocalDateTime appointmentTime;
 
+    @Setter
     @Column(name = "food_type", nullable = false)
     private FoodType foodType;
 
+    @Setter
     @Column(name = "restaurant", nullable = false)
     private String restaurant;
 
+    @Setter
     @Embedded
     @Column(name = "location", nullable = false)
     private Location location;
@@ -49,6 +54,7 @@ public class Plan {
     @OneToMany(mappedBy = "registerHistory")
     private List<RegisterHistory> applicants = new ArrayList<>();
 
+    @Setter
     @Column(name = "progress", nullable = false)
     private Progress progress;
 
