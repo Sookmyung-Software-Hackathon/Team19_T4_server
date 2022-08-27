@@ -1,4 +1,4 @@
-package com.team20.t4.review;
+package com.team20.t4.review.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
