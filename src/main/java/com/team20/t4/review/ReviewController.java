@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,6 +23,11 @@ public class ReviewController {
     @GetMapping("/review/{reviewId}")
     public ReviewResponseDto getSingleReview(@PathVariable Long reviewId){
         return reviewService.getReview(reviewId);
+    }
+
+    @GetMapping("/review/writer")
+    public List<ReviewResponseDto> getReviewListWrittenByMe(){
+        return reviewService.getReviewList();
     }
 
 }

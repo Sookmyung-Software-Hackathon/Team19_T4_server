@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class ReviewService {
@@ -48,7 +51,14 @@ public class ReviewService {
                 .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "존재하지 않는 후기입니다."));
     }
 
-    // 내가 쓴 리뷰 리스트 조회
+    @Transactional
+    public List<ReviewResponseDto> getReviewList(){
+        Member loginedMember = memberService.getLoginedMember();
+        List<Review> reviewList = reviewRepository.findAllByWriter(loginedMember);
+        return reviewList.stream().map(
+                review -> ReviewResponseDto.of(review)
+        ).collect(Collectors.toList());
+    }
 
     // 나에게 온 리뷰 리스트 조회하기
 

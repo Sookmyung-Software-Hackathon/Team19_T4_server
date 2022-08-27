@@ -12,12 +12,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 public class ReviewResponseDto {
+    private Long reviewId;
     private Integer score;
     private String comment;
     private MemberSimpleResponseDto target;
 
     public static ReviewResponseDto of(Review review){
         return ReviewResponseDto.builder()
+                .reviewId(review.getId())
                 .score(review.getScore())
                 .comment(review.getComment())
                 .target(MemberSimpleResponseDto.of(review.getTarget()))
