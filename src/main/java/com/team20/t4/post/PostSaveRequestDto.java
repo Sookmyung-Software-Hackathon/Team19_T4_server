@@ -1,5 +1,6 @@
 package com.team20.t4.post;
 
+import com.team20.t4.plan.PlanSaveRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +17,5 @@ public class PostSaveRequestDto {
     private String content;
     @Size(max = 255, message = "chatRoomLink는 255자 이하여야합니다.")
     private String chatRoomLink;
-//    private PlanSaveRequestDto plan;
+    private PlanSaveRequestDto plan;
 }
