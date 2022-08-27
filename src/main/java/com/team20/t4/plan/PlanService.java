@@ -2,16 +2,20 @@ package com.team20.t4.plan;
 
 import com.team20.t4.common.exception.RequestErrorCode;
 import com.team20.t4.common.exception.RequestException;
+import com.team20.t4.member.domain.Member;
+import com.team20.t4.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PlanService {
 
+    private final MemberRepository memberRepository;
     private final PlanRepository planRepository;
 
     private final RegisterHistoryRepository registerHistoryRepository;
@@ -28,9 +32,18 @@ public class PlanService {
         return planEntity.getId();
     }
 
+    /**Post와 함께 Plan의 정보를 조회할 수 있는 메소드*/
     @Transactional
-    public PlanResponseDto readPlan(Plan plan) {
-        return PlanResponseDto.of(plan);
+    public PlanInfoResponseDto readPlan(Plan plan) {
+        return PlanInfoResponseDto.of(plan);
+    }
+
+    @Transactional
+    public List<AppointmentPost> listMyAppointments(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND));
+
+
     }
 
     // 밥약 시간 수정(Plan 수정)

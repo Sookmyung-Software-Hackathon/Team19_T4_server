@@ -2,7 +2,6 @@ package com.team20.t4.plan;
 
 
 import com.team20.t4.member.domain.Member;
-import com.team20.t4.post.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
-public class PlanResponseDto {
+public class PlanInfoResponseDto {
 
     private Member lead;
     private Integer numOfParticipants;
@@ -21,12 +20,12 @@ public class PlanResponseDto {
     private Location location;
 
     @Builder
-    public PlanResponseDto(Member lead,
-                           Integer numOfParticipants,
-                           LocalDateTime appointmentTime,
-                           FoodType foodType,
-                           String restaurant,
-                           Location location) {
+    public PlanInfoResponseDto(Member lead,
+                               Integer numOfParticipants,
+                               LocalDateTime appointmentTime,
+                               FoodType foodType,
+                               String restaurant,
+                               Location location) {
         this.lead = lead;
         this.numOfParticipants = numOfParticipants;
         this.appointmentTime = appointmentTime;
@@ -35,10 +34,9 @@ public class PlanResponseDto {
         this.location = location;
     }
 
-    public static PlanResponseDto of(Plan plan) {
-        return PlanResponseDto.builder()
+    public static PlanInfoResponseDto of(Plan plan) {
+        return PlanInfoResponseDto.builder()
                 .lead(plan.getLead())
-                .post(plan.getPost())
                 .numOfParticipants(plan.getNumOfParticipants())
                 .appointmentTime(plan.getAppointmentTime())
                 .foodType(plan.getFoodType())
