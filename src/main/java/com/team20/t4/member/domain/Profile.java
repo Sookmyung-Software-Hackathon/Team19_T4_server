@@ -1,10 +1,16 @@
 package com.team20.t4.member.domain;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
+@NoArgsConstructor
+@Getter
 @Entity
 public class Profile {
 
@@ -24,6 +30,17 @@ public class Profile {
     private String mbti;
     private String introduction;
     private Float score;
+
+
+    @Builder
+    public Profile(String name, LocalDate birthYear, Sex sex, String mbti, String introduction, Float score) {
+        this.name = name;
+        this.birthYear = birthYear;
+        this.sex = sex;
+        this.mbti = mbti;
+        this.introduction = introduction;
+        this.score = Float.valueOf(0);
+    }
 
     // update //
     public Profile updateName(String newName){
