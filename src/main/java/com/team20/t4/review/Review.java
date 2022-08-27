@@ -21,7 +21,7 @@ public class Review extends BaseTimeEntity {
     private Long id;
 
     @Column(name = "review_score")
-    private Float score;
+    private Integer score;
 
     @Column(name = "review_comment")
     private String comment;
