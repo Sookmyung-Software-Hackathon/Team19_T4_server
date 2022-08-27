@@ -1,4 +1,4 @@
-package com.team20.t4.plan;
+package com.team20.t4.plan.domain;
 
 import com.team20.t4.common.entity.BaseTimeEntity;
 import com.team20.t4.member.domain.Member;

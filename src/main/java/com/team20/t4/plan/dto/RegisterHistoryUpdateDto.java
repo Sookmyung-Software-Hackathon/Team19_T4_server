@@ -1,6 +1,9 @@
-package com.team20.t4.plan;
+package com.team20.t4.plan.dto;
 
 import com.team20.t4.member.domain.Member;
+import com.team20.t4.plan.domain.Plan;
+import com.team20.t4.plan.domain.RegisterHistory;
+import com.team20.t4.plan.domain.State;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

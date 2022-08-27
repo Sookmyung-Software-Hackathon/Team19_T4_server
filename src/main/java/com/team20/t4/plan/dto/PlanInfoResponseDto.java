@@ -1,7 +1,10 @@
-package com.team20.t4.plan;
+package com.team20.t4.plan.dto;
 
 
 import com.team20.t4.member.domain.Member;
+import com.team20.t4.plan.domain.FoodType;
+import com.team20.t4.plan.domain.Location;
+import com.team20.t4.plan.domain.Plan;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,11 @@
 package com.team20.t4.plan;
 
+import com.team20.t4.plan.domain.Progress;
+import com.team20.t4.plan.domain.State;
+import com.team20.t4.plan.dto.AppointmentPost;
+import com.team20.t4.plan.dto.AppointmentTimeVO;
+import com.team20.t4.plan.dto.PlanUpdateRequestDto;
+import com.team20.t4.plan.dto.RegisterHistorySaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

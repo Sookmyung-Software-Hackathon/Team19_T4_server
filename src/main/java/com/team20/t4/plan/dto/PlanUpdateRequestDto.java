@@ -1,21 +1,20 @@
-package com.team20.t4.plan;
+package com.team20.t4.plan.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.team20.t4.member.domain.Member;
+import com.team20.t4.plan.domain.FoodType;
+import com.team20.t4.plan.domain.Location;
+import com.team20.t4.plan.domain.Plan;
+import com.team20.t4.plan.domain.Progress;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
+@Getter
 @NoArgsConstructor
-public class PlanSaveRequestDto {
+public class PlanUpdateRequestDto {
 
     private Progress progress;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime appointmentTime;
     private Location location;
     private String restaurant;
@@ -23,8 +22,11 @@ public class PlanSaveRequestDto {
     private Integer numOfParticipants;
 
     @Builder
-    public PlanSaveRequestDto(Progress progress, LocalDateTime appointmentTime, Location location, String restaurant, FoodType foodType, Integer numOfParticipants) {
-        this.progress = progress;
+    public PlanUpdateRequestDto(LocalDateTime appointmentTime,
+                                Location location,
+                                String restaurant,
+                                FoodType foodType,
+                                Integer numOfParticipants) {
         this.appointmentTime = appointmentTime;
         this.location = location;
         this.restaurant = restaurant;

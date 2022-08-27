@@ -1,6 +1,7 @@
-package com.team20.t4.post;
+package com.team20.t4.post.dto;
 
 import com.team20.t4.member.domain.Member;
+import com.team20.t4.post.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;

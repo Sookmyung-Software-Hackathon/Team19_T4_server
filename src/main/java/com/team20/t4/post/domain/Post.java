@@ -1,13 +1,12 @@
-package com.team20.t4.post;
+package com.team20.t4.post.domain;
 
 import com.team20.t4.common.entity.BaseTimeEntity;
 import com.team20.t4.member.domain.Member;
-import com.team20.t4.plan.Plan;
+import com.team20.t4.plan.domain.Plan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
 

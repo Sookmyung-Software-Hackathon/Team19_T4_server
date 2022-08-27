@@ -1,8 +1,7 @@
 package com.team20.t4.member.domain;
 
 import com.team20.t4.common.entity.BaseTimeEntity;
-import com.team20.t4.plan.RegisterHistory;
-import com.team20.t4.post.Post;
+import com.team20.t4.post.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

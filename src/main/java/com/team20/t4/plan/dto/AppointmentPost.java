@@ -1,8 +1,7 @@
-package com.team20.t4.plan;
+package com.team20.t4.plan.dto;
 
+import com.team20.t4.plan.domain.RegisterHistory;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 public class AppointmentPost {

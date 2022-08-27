@@ -4,6 +4,8 @@ import com.team20.t4.common.exception.RequestErrorCode;
 import com.team20.t4.common.exception.RequestException;
 import com.team20.t4.member.domain.Member;
 import com.team20.t4.member.domain.MemberRepository;
+import com.team20.t4.plan.domain.*;
+import com.team20.t4.plan.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.team20.t4.plan;
+package com.team20.t4.plan.domain;
 
 import lombok.AllArgsConstructor;
 
