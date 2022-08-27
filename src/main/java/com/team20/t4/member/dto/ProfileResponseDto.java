@@ -17,7 +17,7 @@ public class ProfileResponseDto {
     private Sex sex;
     private String mbti;
     private String introduction;
-    private Float score;
+    private Integer score;
 
     public static ProfileResponseDto toResponseDto(Profile profile) {
         return ProfileResponseDto.builder()
@@ -25,7 +25,7 @@ public class ProfileResponseDto {
                 .sex(profile.getSex())
                 .mbti(profile.getMbti())
                 .introduction(profile.getIntroduction())
-                .score(profile.getScore())
+                .score(Double.valueOf(profile.getScore()*20).intValue())
                 .build();
     }
 

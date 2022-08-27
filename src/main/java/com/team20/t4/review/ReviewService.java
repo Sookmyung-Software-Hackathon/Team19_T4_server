@@ -10,12 +10,15 @@ import com.team20.t4.review.dto.ReviewResponseDtoByTarget;
 import com.team20.t4.review.dto.ReviewSaveRequestDto;
 import com.team20.t4.review.dto.ReviewSaveRequestVo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ReviewService {
@@ -25,20 +28,26 @@ public class ReviewService {
 
     @Transactional
     public void saveReview(ReviewSaveRequestDto requestDto) throws RequestException {
-        ReviewSaveRequestVo requestVo = getReviewSaveRequestVo(requestDto);
-        reviewRepository.save(requestVo.toEntity());
-    }
-
-    private ReviewSaveRequestVo getReviewSaveRequestVo(ReviewSaveRequestDto requestDto) throws RequestException {
+        Member loginedMember = memberService.getLoginedMember();
+        Member targetMember = getTarget(requestDto.getTargetId());
         ReviewSaveRequestVo requestVo = new ReviewSaveRequestVo(requestDto);
-        requestVo.updateWriter(memberService.getLoginedMember());
-        requestVo.updateTarget(getTarget(requestDto.getTargetId()));
-        return requestVo;
+        requestVo.updateWriter(loginedMember);
+        requestVo.updateTarget(targetMember);
+
+        reviewRepository.save(requestVo.toEntity());
+        targetMember.getProfile().updateScore(calcMemberScoreInPercentage(targetMember));
     }
 
     private Member getTarget(String targetId) {
         return memberRepository.findByMemberId(targetId)
                 .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "회원가입하지 않은 아이디입니다."));
+    }
+
+    private Double calcMemberScoreInPercentage(Member targetMember){
+        Double avgScore = reviewRepository.calcMemberScore(targetMember);
+        if(avgScore == null) avgScore = 0.0;
+        log.info("평균 : "+avgScore);
+        return avgScore;
     }
 
     @Transactional
@@ -77,7 +86,5 @@ public class ReviewService {
                 review -> ReviewResponseDtoByTarget.of(review)
         ).collect(Collectors.toList());
     }
-
-    // 평점 계산하여 Member 테이블에 반영
 
 }

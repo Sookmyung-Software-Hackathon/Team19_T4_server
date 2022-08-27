@@ -27,7 +27,7 @@ public class Profile {
     private String fileKey;
     private String mbti;
     private String introduction;
-    private Float score;
+    private Double score;
 
     @Builder
     public Profile(String birthYear, Sex sex, String mbti, String introduction, Float score) {
@@ -35,7 +35,7 @@ public class Profile {
         this.sex = sex;
         this.mbti = mbti;
         this.introduction = introduction;
-        this.score = Float.valueOf(0);
+        this.score = Double.valueOf(0);
     }
 
     // update //
@@ -47,5 +47,9 @@ public class Profile {
     public Profile updateIntroduction(String newIntroduction) {
         this.introduction = newIntroduction;
         return this;
+    }
+
+    public void updateScore(Double score){
+        this.score = score;
     }
 }
