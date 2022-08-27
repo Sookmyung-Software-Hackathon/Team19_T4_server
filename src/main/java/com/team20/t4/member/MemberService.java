@@ -4,10 +4,7 @@ import com.team20.t4.common.exception.RequestErrorCode;
 import com.team20.t4.common.exception.RequestException;
 import com.team20.t4.common.s3.S3Util;
 import com.team20.t4.member.domain.*;
-import com.team20.t4.member.dto.MemberInfoResponseDto;
-import com.team20.t4.member.dto.MemberLoginRequestDto;
-import com.team20.t4.member.dto.MemberSaveRequestDto;
-import com.team20.t4.member.dto.TokenRequestDto;
+import com.team20.t4.member.dto.*;
 import com.team20.t4.security.JwtProvider;
 import com.team20.t4.security.SecurityUtil;
 import com.team20.t4.security.dto.TokenDto;
@@ -136,8 +133,10 @@ public class MemberService {
     }
 
     @Transactional
-    public void updateMemberName(String newName){
-        getLoginedMember().getProfile().updateName(newName);
+    public void updateMemberProfile(MemberProfileUpdateRequestDto dto){
+        getLoginedMember().getProfile().updateName(dto.getName());
+        getLoginedMember().getProfile().updateMbti(dto.getMbti());
+        getLoginedMember().getProfile().updateIntroduction(dto.getIntroduction());
     }
 
     @Transactional

@@ -48,4 +48,14 @@ public class Profile {
         this.name = newName;
         return this;
     }
+
+    public Profile updateMbti(String newMbti) {
+        this.mbti = newMbti;
+        return this;
+    }
+
+    public Profile updateIntroduction(String newIntroduction) {
+        this.introduction = newIntroduction;
+        return this;
+    }
 }
