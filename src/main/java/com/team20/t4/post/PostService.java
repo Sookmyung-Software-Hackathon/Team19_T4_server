@@ -1,5 +1,7 @@
 package com.team20.t4.post;
 
+import com.team20.t4.common.exception.RequestErrorCode;
+import com.team20.t4.common.exception.RequestException;
 import com.team20.t4.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,11 +23,18 @@ public class PostService {
         return savedPost.getId();
     }
 
-    // 조회
+    @Transactional
+    public PostResponseDto getSinglePost(Long postId) throws RequestException {
+        return PostResponseDto.of(getPostOrElseThrowRequestException(postId));
+    }
 
+    private Post getPostOrElseThrowRequestException(Long postId) {
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "존재하지 않는 글입니다."));
+    }
 
-    
     // 수정
+
     
     // 삭제
     
