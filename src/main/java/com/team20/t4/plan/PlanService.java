@@ -16,7 +16,11 @@ public class PlanService {
 
     private final RegisterHistoryRepository registerHistoryRepository;
 
-    // 밥약 생성(포스트 생성과 동시에 자동 생성 Plan 생성)
+    /**
+     * Plan 관련 CRUD
+     * */
+
+    // 밥약 생성(포스트 생성과 동시에 자동 생성 = create Plan)
     @Transactional
     public Long createPlan(PlanSaveRequestDto dto) {
         Plan planEntity = dto.toEntity();
@@ -26,7 +30,9 @@ public class PlanService {
 
     // 밥약 시간 수정(Plan 수정)
     @Transactional
-    public Long updateAppointmentTime(Plan plan, LocalDateTime newTime) {
+    public Long updateAppointmentTime(Long planId, LocalDateTime newTime) {
+        Plan plan = planRepository.findById(planId)
+                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND));
         plan.setAppointmentTime(newTime);
         return plan.getId();
     }
@@ -54,6 +60,10 @@ public class PlanService {
         return planId;
     }
 
+    /**
+     * RegisterHistory 관련 CRUD
+     * */
+
     // 밥약 신청(RegisterHistory 생성)
     @Transactional
     public Long sendAppointmentRequest(RegisterHistorySaveRequestDto dto) {
@@ -67,13 +77,10 @@ public class PlanService {
     }
     // 밥약 수락/거절(RegisterHistory 수정)
     @Transactional
-    public Long response(RegisterHistoryUpdateDto dto, State newState) {
-        RegisterHistory registerHistoryEntity = RegisterHistory.builder()
-                .applicant(dto.getApplicant())
-                .plan(dto.getPlan())
-                .state(newState)
-                .build();
-        registerHistoryRepository.save(registerHistoryEntity);
+    public Long response(Long registerHistoryId, State newState) {
+        RegisterHistory registerHistoryEntity = registerHistoryRepository.findById(registerHistoryId)
+                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND));
+        registerHistoryEntity.setState(newState);
         return registerHistoryEntity.getId();
     }
 
