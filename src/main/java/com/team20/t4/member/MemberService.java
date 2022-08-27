@@ -137,7 +137,7 @@ public class MemberService {
 
     @Transactional
     public void updateMemberName(String newName){
-        getLoginedMember().updateName(newName);
+        getLoginedMember().getProfile().updateName(newName);
     }
 
     @Transactional
