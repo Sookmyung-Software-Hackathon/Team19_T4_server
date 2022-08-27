@@ -134,7 +134,7 @@ public class MemberService {
 
     @Transactional
     public void updateMemberProfile(MemberProfileUpdateRequestDto dto){
-        getLoginedMember().getProfile().updateName(dto.getName());
+        getLoginedMember().updateName(dto.getName());
         getLoginedMember().getProfile().updateMbti(dto.getMbti());
         getLoginedMember().getProfile().updateIntroduction(dto.getIntroduction());
     }

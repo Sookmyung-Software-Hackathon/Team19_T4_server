@@ -17,7 +17,7 @@ public class MemberSimpleResponseDto {
     public static MemberSimpleResponseDto of(Member member){
         return MemberSimpleResponseDto.builder()
                 .memberId(member.getMemberId())
-                .name(member.getProfile().getName())
+                .name(member.getName())
                 .build();
     }
 }

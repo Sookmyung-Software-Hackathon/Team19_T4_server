@@ -19,8 +19,6 @@ import java.time.LocalDate;
 @Getter
 public class ProfileSaveRequestDto {
 
-    @NotBlank(message = "이름은 빈 값일 수 없습니다.")
-    private String name;
     //@NotNull(message = "출생연도는 null 값일 수 없습니다.")
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     //@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -35,9 +33,7 @@ public class ProfileSaveRequestDto {
     private Float score;
 
     public Profile toEntity() {
-
         return Profile.builder()
-                .name(name)
                 .birthYear(birthYear)
                 .sex(sex)
                 .mbti(mbti)
