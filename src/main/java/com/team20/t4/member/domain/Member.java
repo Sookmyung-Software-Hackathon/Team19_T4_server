@@ -38,7 +38,7 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "member")
     private MemberProfileImg memberProfileImg;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "profile_id")
     private Profile profile;
 

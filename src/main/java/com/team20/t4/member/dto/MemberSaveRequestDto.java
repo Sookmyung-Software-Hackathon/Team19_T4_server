@@ -5,19 +5,24 @@ import com.team20.t4.member.domain.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberSaveRequestDto {
-    @NotEmpty(message = "아이디는 빈값일 수 없습니다.") private String memberId;
-    @NotEmpty(message = "비밀번호는 빈값일 수 없습니다.") private String password;
+    @NotEmpty(message = "아이디는 빈값일 수 없습니다.")
+    private String memberId;
+    @NotEmpty(message = "비밀번호는 빈값일 수 없습니다.")
+    private String password;
 
-    @NotEmpty(message = "프로필은 빈값일 수 없습니다.") private ProfileSaveRequestDto profileDto;
+    @NotNull(message = "프로필은 null값일 수 없습니다.")
+    private ProfileSaveRequestDto profileDto;
 
     public Member toEntityWithEncodedPassword(PasswordEncoder passwordEncoder){
         return Member.builder()
