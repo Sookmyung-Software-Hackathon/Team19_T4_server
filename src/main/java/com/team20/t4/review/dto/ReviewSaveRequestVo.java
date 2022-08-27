@@ -1,7 +1,8 @@
-package com.team20.t4.review;
+package com.team20.t4.review.dto;
 
 import com.team20.t4.common.exception.RequestException;
 import com.team20.t4.member.domain.Member;
+import com.team20.t4.review.Review;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;

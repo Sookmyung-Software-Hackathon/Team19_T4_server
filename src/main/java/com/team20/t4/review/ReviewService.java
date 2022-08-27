@@ -5,6 +5,9 @@ import com.team20.t4.common.exception.RequestException;
 import com.team20.t4.member.MemberService;
 import com.team20.t4.member.domain.Member;
 import com.team20.t4.member.domain.MemberRepository;
+import com.team20.t4.review.dto.ReviewResponseDto;
+import com.team20.t4.review.dto.ReviewSaveRequestDto;
+import com.team20.t4.review.dto.ReviewSaveRequestVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +37,16 @@ public class ReviewService {
                 .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "회원가입하지 않은 아이디입니다."));
     }
 
-    // 리뷰 개별 조회
+    @Transactional
+    public ReviewResponseDto getReview(Long reviewId) throws RequestException {
+        Review review = getSingleReview(reviewId);
+        return ReviewResponseDto.of(review);
+    }
+
+    private Review getSingleReview(Long reviewId) {
+        return reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "존재하지 않는 후기입니다."));
+    }
 
     // 내가 쓴 리뷰 리스트 조회
 
