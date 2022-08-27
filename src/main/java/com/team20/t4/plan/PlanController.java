@@ -1,10 +1,9 @@
 package com.team20.t4.plan;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,6 +14,11 @@ public class PlanController {
     @PostMapping("/plan/new")
     public Long createPlan(@RequestBody PlanSaveRequestDto saveRequestDto) {
         return planService.createPlan(saveRequestDto);
+    }
+
+    @GetMapping("/appointments/{memberId}")
+    public List<AppointmentPost> listMemberAppointments (@PathVariable Long memberId) {
+        return planService.listMyAppointments(memberId);
     }
 
 
