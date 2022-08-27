@@ -1,6 +1,7 @@
 package com.team20.t4.member.domain;
 
 import com.team20.t4.common.entity.BaseTimeEntity;
+import com.team20.t4.plan.RegisterHistory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,6 +42,9 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "profile_id")
     private Profile profile;
+
+    @OneToMany(mappedBy = "applicant")
+    private List<RegisterHistory> myAppointmentList = new ArrayList<>();
 
     @Builder
     public Member(String memberId, String password, Profile profile){

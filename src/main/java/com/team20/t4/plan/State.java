@@ -1,12 +1,15 @@
 package com.team20.t4.plan;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public enum State {
-    RECRUITING("인원모집중"),
-    FULL_MEMBER("인원모집완료"),
-    COMPLETED_PLAN("밥약이행완료");
+
+    DEFAULT("처리전"),
+    PERMITTED("수락"),
+    DENIED("거절");
 
     private String definition;
 }
