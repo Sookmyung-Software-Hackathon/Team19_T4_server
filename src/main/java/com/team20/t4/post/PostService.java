@@ -33,11 +33,26 @@ public class PostService {
                 .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "존재하지 않는 글입니다."));
     }
 
-    // 수정
+    @Transactional
+    public Long updatePost(Long postId, PostUpdateRequestDto requestDto) throws RequestException{
+        checkPostExists(postId);
+        Post updatedPost = postRepository.save(requestDto.toEntity(postId));
+        return updatedPost.getId();
+    }
 
-    
-    // 삭제
-    
+    private void checkPostExists(Long postId) {
+        if(!postRepository.existsById(postId))
+            throw new RequestException(RequestErrorCode.NOT_FOUND, "요청한 Post가 존재하지 않습니다.");
+    }
+
+    @Transactional
+    public void deletePost(Long postId){
+        // plan이 진행중이면 plan도 삭제
+        // plan이 완료이면 plan은 삭제하지 않음
+        postRepository.deleteById(postId);
+    }
+
+
     // 리스트 조회
     // 검색 기준 : 위치
     // 정렬 기준 : 최근 수정순
