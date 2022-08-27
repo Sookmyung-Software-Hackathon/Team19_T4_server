@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,8 +43,12 @@ public class PlanService {
     public List<AppointmentPost> listMyAppointments(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND));
+        List<AppointmentPost> list = new ArrayList<>();
 
-
+        for (RegisterHistory registerHistory : registerHistoryRepository.readRegisterHistoriesByMember(member)) {
+            list.add(new AppointmentPost(registerHistory, registerHistory.getPlan().getPost().getId()));
+        }
+        return list;
     }
 
     // 밥약 시간 수정(Plan 수정)
