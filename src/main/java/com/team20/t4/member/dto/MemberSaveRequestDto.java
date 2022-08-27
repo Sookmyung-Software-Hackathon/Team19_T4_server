@@ -1,6 +1,7 @@
 package com.team20.t4.member.dto;
 
 import com.team20.t4.member.domain.Member;
+import com.team20.t4.member.domain.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,10 +17,13 @@ public class MemberSaveRequestDto {
     @NotEmpty(message = "아이디는 빈값일 수 없습니다.") private String memberId;
     @NotEmpty(message = "비밀번호는 빈값일 수 없습니다.") private String password;
 
+    @NotEmpty(message = "프로필은 빈값일 수 없습니다.") private ProfileSaveRequestDto profileDto;
+
     public Member toEntityWithEncodedPassword(PasswordEncoder passwordEncoder){
         return Member.builder()
                 .memberId(memberId)
                 .password(passwordEncoder.encode(password))
+                .profile(profileDto.toEntity())
                 .roles(Collections.singletonList("ROLE_USER"))
                 .build();
     }
