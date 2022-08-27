@@ -27,7 +27,7 @@ public class ReviewController {
 
     @GetMapping("/review/writer")
     public List<ReviewResponseDto> getReviewListWrittenByMe(){
-        return reviewService.getReviewList();
+        return reviewService.getReviewListByWriter();
     }
 
 }

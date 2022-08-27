@@ -52,7 +52,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public List<ReviewResponseDto> getReviewList(){
+    public List<ReviewResponseDto> getReviewListByWriter(){
         Member loginedMember = memberService.getLoginedMember();
         List<Review> reviewList = reviewRepository.findAllByWriter(loginedMember);
         return reviewList.stream().map(
