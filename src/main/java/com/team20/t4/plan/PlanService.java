@@ -28,6 +28,11 @@ public class PlanService {
         return planEntity.getId();
     }
 
+    @Transactional
+    public PlanResponseDto readPlan(Plan plan) {
+        return PlanResponseDto.of(plan);
+    }
+
     // 밥약 시간 수정(Plan 수정)
     @Transactional
     public Long updateAppointmentTime(Long planId, LocalDateTime newTime) {

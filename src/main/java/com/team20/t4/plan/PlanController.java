@@ -17,6 +17,7 @@ public class PlanController {
         return planService.createPlan(saveRequestDto);
     }
 
+
     @PostMapping("/plan/time/{planId}")
     public Long updateAppointmentTime(@PathVariable Long planId, @RequestBody AppointmentTimeVO newAppointmentTime) {
         return planService.updateAppointmentTime(planId, newAppointmentTime.getAppointmentTime());

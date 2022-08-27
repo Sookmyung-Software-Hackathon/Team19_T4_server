@@ -1,5 +1,6 @@
 package com.team20.t4.plan;
 
+import com.team20.t4.common.entity.BaseTimeEntity;
 import com.team20.t4.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class RegisterHistory {
+public class RegisterHistory extends BaseTimeEntity {
 
     @Id @Column(name = "register_history_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
