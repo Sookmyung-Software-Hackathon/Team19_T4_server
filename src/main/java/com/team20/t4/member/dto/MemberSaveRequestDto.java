@@ -14,7 +14,6 @@ import java.util.Collections;
 @AllArgsConstructor
 public class MemberSaveRequestDto {
     @NotEmpty(message = "아이디는 빈값일 수 없습니다.") private String memberId;
-    @NotEmpty(message = "이름은 빈값일 수 없습니다.") private String name;
     @NotEmpty(message = "비밀번호는 빈값일 수 없습니다.") private String password;
 
     public Member toEntityWithEncodedPassword(PasswordEncoder passwordEncoder){
@@ -22,7 +21,6 @@ public class MemberSaveRequestDto {
                 .memberId(memberId)
                 .password(passwordEncoder.encode(password))
                 .roles(Collections.singletonList("ROLE_USER"))
-                .name(name)
                 .build();
     }
 }

@@ -21,15 +21,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Entity
 public class Member extends BaseTimeEntity implements UserDetails {
-    @Id
+    @Id @Column(name = "member_pk")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberPk;
 
     @Column(length = 20, nullable = false)
     private String memberId;
-
-    @Column(length = 10, nullable = false, name = "member_name")
-    private String name;
 
     @Column(length = 100, name = "member_password")
     private String password;
@@ -41,11 +38,15 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "member")
     private MemberProfileImg memberProfileImg;
 
+    @OneToOne
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
+
     @Builder
-    public Member(String memberId, String name, String password){
+    public Member(String memberId, String password, Profile profile){
         this.memberId = memberId;
-        this.name = name;
         this.password = password;
+        this.profile = profile;
     }
 
     // UserDetails //
@@ -82,8 +83,4 @@ public class Member extends BaseTimeEntity implements UserDetails {
     }
 
     // update //
-    public Member updateName(String newName){
-        this.name = newName;
-        return this;
-    }
 }

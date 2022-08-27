@@ -23,7 +23,6 @@ public class MemberInfoResponseDto {
         return MemberInfoResponseDto.builder()
                 .memberPk(member.getMemberPk())
                 .memberId(member.getMemberId())
-                .name(member.getName())
                 .roles(member.getRoles())
                 .imgUrl(imgUrl)
                 .build();
