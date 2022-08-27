@@ -11,11 +11,6 @@ public class PlanController {
 
     private final PlanService planService;
 
-    @PostMapping("/plan/new")
-    public Long createPlan(@RequestBody PlanSaveRequestDto saveRequestDto) {
-        return planService.createPlan(saveRequestDto);
-    }
-
     @GetMapping("/appointments/{memberId}")
     public List<AppointmentPost> listMemberAppointments (@PathVariable Long memberId) {
         return planService.listMyAppointments(memberId);

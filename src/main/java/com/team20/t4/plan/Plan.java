@@ -27,7 +27,7 @@ public class Plan {
     @JoinColumn(name = "lead_pk", nullable = false)
     private Member lead;
 
-    @OneToOne(mappedBy = "plan")
+    @OneToOne(mappedBy = "plan", cascade = CascadeType.PERSIST)
     private Post post;
 
     @Column(name = "num_of_participants", nullable = false)
@@ -40,6 +40,7 @@ public class Plan {
 
     @Setter
     @Column(name = "food_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private FoodType foodType;
 
     @Setter
@@ -51,11 +52,12 @@ public class Plan {
     @Column(name = "location", nullable = false)
     private Location location;
 
-    @OneToMany(mappedBy = "registerHistory")
-    private List<RegisterHistory> applicants = new ArrayList<>();
+    @OneToMany(mappedBy = "plan")
+    private List<RegisterHistory> registerHistories = new ArrayList<>();
 
     @Setter
     @Column(name = "progress", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Progress progress;
 
     @Builder

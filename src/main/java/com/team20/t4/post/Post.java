@@ -2,10 +2,12 @@ package com.team20.t4.post;
 
 import com.team20.t4.common.entity.BaseTimeEntity;
 import com.team20.t4.member.domain.Member;
+import com.team20.t4.plan.Plan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
 
@@ -16,7 +18,7 @@ import javax.persistence.*;
 @Entity
 public class Post extends BaseTimeEntity {
     @Id
-    @Column(name = "post_id")
+    @Column(name = "post_pk")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -29,10 +31,12 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_chat_room_link")
     private String chatRoomLink;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "writer_pk")
     private Member writer;
 
-//    @OneToOne - cascade persist
-//    private Plan plan;
+    @OneToOne
+    @JoinColumn(name = "plan_pk")
+    private Plan plan;
 
 }
