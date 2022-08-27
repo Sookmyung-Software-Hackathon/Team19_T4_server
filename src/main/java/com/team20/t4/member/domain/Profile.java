@@ -17,9 +17,6 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 10, nullable = false, name = "member_name")
-    private String name;
-
     @Column(name = "birth_year")
     private String birthYear;
 
@@ -32,10 +29,8 @@ public class Profile {
     private String introduction;
     private Float score;
 
-
     @Builder
-    public Profile(String name, String birthYear, Sex sex, String mbti, String introduction, Float score) {
-        this.name = name;
+    public Profile(String birthYear, Sex sex, String mbti, String introduction, Float score) {
         this.birthYear = birthYear;
         this.sex = sex;
         this.mbti = mbti;
@@ -44,11 +39,6 @@ public class Profile {
     }
 
     // update //
-    public Profile updateName(String newName){
-        this.name = newName;
-        return this;
-    }
-
     public Profile updateMbti(String newMbti) {
         this.mbti = newMbti;
         return this;

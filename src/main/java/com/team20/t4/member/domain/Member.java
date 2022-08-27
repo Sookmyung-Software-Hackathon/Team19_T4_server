@@ -32,6 +32,9 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @Column(length = 100, name = "member_password")
     private String password;
 
+    @Column(length = 10, nullable = false, name = "member_name")
+    private String name;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
@@ -47,9 +50,10 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private List<RegisterHistory> myAppointmentList = new ArrayList<>();
 
     @Builder
-    public Member(String memberId, String password, Profile profile){
+    public Member(String memberId, String password, String name, Profile profile){
         this.memberId = memberId;
         this.password = password;
+        this.name = name;
         this.profile = profile;
     }
 
@@ -87,4 +91,8 @@ public class Member extends BaseTimeEntity implements UserDetails {
     }
 
     // update //
+    public Member updateName(String newName){
+        this.name = newName;
+        return this;
+    }
 }

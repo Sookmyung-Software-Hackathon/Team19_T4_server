@@ -11,19 +11,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
-public class ReviewResponseDto {
+public class ReviewResponseDtoByTarget {
     private Long reviewId;
     private Integer score;
     private String comment;
-    private MemberSimpleResponseDto target;
+    private MemberSimpleResponseDto writer;
 
-    public static ReviewResponseDto of(Review review){
-        return ReviewResponseDto.builder()
+    public static ReviewResponseDtoByTarget of(Review review){
+        return ReviewResponseDtoByTarget.builder()
                 .reviewId(review.getId())
                 .score(review.getScore())
                 .comment(review.getComment())
-                .target(MemberSimpleResponseDto.of(review.getTarget()))
+                .writer(MemberSimpleResponseDto.of(review.getWriter()))
                 .build();
     }
-
 }
