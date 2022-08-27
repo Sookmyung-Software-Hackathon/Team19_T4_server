@@ -25,5 +25,6 @@ public class Plan {
     private FoodType foodType;
 
     @Embedded
+    @Column(name = "location")
     private Location location;
 }
