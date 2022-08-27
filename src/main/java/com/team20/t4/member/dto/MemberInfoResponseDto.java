@@ -15,7 +15,7 @@ import java.util.List;
 public class MemberInfoResponseDto {
     private Long memberPk;
     private String memberId;
-    private String name;
+    private ProfileResponseDto profileDto;
     private List<String> roles;
     private String imgUrl;
 
@@ -23,7 +23,7 @@ public class MemberInfoResponseDto {
         return MemberInfoResponseDto.builder()
                 .memberPk(member.getMemberPk())
                 .memberId(member.getMemberId())
-                .name(member.getName())
+                .profileDto(ProfileResponseDto.toResponseDto(member.getProfile()))
                 .roles(member.getRoles())
                 .imgUrl(imgUrl)
                 .build();
