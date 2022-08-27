@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProfileResponseDto {
 
-    private String name;
     private String birthYear;
     private Sex sex;
     private String mbti;
@@ -22,7 +21,6 @@ public class ProfileResponseDto {
 
     public static ProfileResponseDto toResponseDto(Profile profile) {
         return ProfileResponseDto.builder()
-                .name(profile.getName())
                 .birthYear(profile.getBirthYear())
                 .sex(profile.getSex())
                 .mbti(profile.getMbti())
