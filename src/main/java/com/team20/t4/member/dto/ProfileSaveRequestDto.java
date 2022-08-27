@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,10 +21,12 @@ public class ProfileSaveRequestDto {
 
     @NotBlank(message = "이름은 빈 값일 수 없습니다.")
     private String name;
-    @NotNull(message = "출생연도는 null 값일 수 없습니다.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate birthYear;
+    //@NotNull(message = "출생연도는 null 값일 수 없습니다.")
+    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    //@JsonDeserialize(using = LocalDateDeserializer.class)
+    @NotEmpty(message = "출생연도는 빈 값일 수 없습니다.")
+    @Size(min = 4, max = 4)
+    private String birthYear;
     
     @NotNull(message = "성별은 null 값일 수 없습니다.")
     private Sex sex;
@@ -31,6 +35,7 @@ public class ProfileSaveRequestDto {
     private Float score;
 
     public Profile toEntity() {
+
         return Profile.builder()
                 .name(name)
                 .birthYear(birthYear)
