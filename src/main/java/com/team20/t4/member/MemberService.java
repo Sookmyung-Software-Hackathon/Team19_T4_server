@@ -133,7 +133,7 @@ public class MemberService {
         Optional<MemberProfileImg> optionalMemberProfileImg = memberProfileImgRepository.findByMember(loginedMember);
         String imgUrl;
         if(optionalMemberProfileImg.isEmpty()){
-            imgUrl = s3Util.getUrl("member-profile-image/유튜브_기본프로필_하늘색.jpg");
+            imgUrl = s3Util.getUrl("member-profile-image/mealmate_default_profile_image.jpg");
         }
         else{
             imgUrl = s3Util.getUrl(optionalMemberProfileImg.get().getFileKey());
