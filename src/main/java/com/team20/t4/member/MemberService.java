@@ -10,6 +10,10 @@ import com.team20.t4.plan.domain.Plan;
 import com.team20.t4.plan.domain.RegisterHistory;
 import com.team20.t4.plan.domain.RegisterHistoryRepository;
 import com.team20.t4.post.domain.Post;
+import com.team20.t4.review.Review;
+import com.team20.t4.review.ReviewRepository;
+import com.team20.t4.review.ReviewService;
+import com.team20.t4.review.dto.ReviewResponseDtoByTarget;
 import com.team20.t4.security.JwtProvider;
 import com.team20.t4.security.SecurityUtil;
 import com.team20.t4.security.dto.TokenDto;
@@ -26,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,6 +41,7 @@ public class MemberService {
     private final PasswordEncoder pwdEncorder;
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
+    private final ReviewRepository reviewRepository;
     private final S3Util s3Util;
 
     private final RegisterHistoryRepository registerHistoryRepository;
@@ -127,6 +133,31 @@ public class MemberService {
     public MemberInfoResponseDto getMemberInfo(){
         Member loginedMember = getLoginedMember();
         return MemberInfoResponseDto.toDtoWithProfileImage(loginedMember, getImgUrl(loginedMember));
+    }
+
+    @Transactional
+    public MemberInfoAndReviewListResponseDto getMemberInfo(Long memberPk){
+        Member memberByMemberPk = getMemberByMemberPk(memberPk);
+        List<ReviewResponseDtoByTarget> reviewListOfOther = getReviewListOfOther(memberPk);
+        MemberInfoResponseDto memberInfoResponseDto = MemberInfoResponseDto.toDtoWithProfileImage(memberByMemberPk, getImgUrl(memberByMemberPk));
+        return new MemberInfoAndReviewListResponseDto(reviewListOfOther, memberInfoResponseDto);
+    }
+
+    public List<ReviewResponseDtoByTarget> getReviewListOfOther(Long memberPk) throws RequestException {
+        Member target = getMemberByMemberPk(memberPk);
+        List<Review> reviewList = reviewRepository.findAllByTarget(target);
+        return getReviewResponseDtoByTargetList(reviewList);
+    }
+
+    private Member getMemberByMemberPk(Long memberPk) {
+        return memberRepository.findById(memberPk)
+                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "회원가입하지 않은 아이디입니다."));
+    }
+
+    private List<ReviewResponseDtoByTarget> getReviewResponseDtoByTargetList(List<Review> reviewList) {
+        return reviewList.stream().map(
+                review -> ReviewResponseDtoByTarget.of(review)
+        ).collect(Collectors.toList());
     }
 
     private String getImgUrl(Member loginedMember) {
