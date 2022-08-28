@@ -1,6 +1,8 @@
-package com.team20.t4.post;
+package com.team20.t4.post.dto;
 
 import com.team20.t4.member.domain.Member;
+import com.team20.t4.plan.domain.Plan;
+import com.team20.t4.post.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -13,7 +15,7 @@ public class PostSaveRequestVo {
     private String content;
     private String chatRoomLink;
     private Member writer;
-//    private Plan plan;
+    private Plan plan;
 
     public static PostSaveRequestVo of(PostSaveRequestDto requestDto){
         return PostSaveRequestVo.builder()
@@ -27,12 +29,15 @@ public class PostSaveRequestVo {
         this.writer = writer;
     }
 
+    public void updatePlan(Plan plan) {this.plan = plan;}
+
     public Post toEntity() {
         return Post.builder()
                 .title(title)
                 .content(content)
                 .chatRoomLink(chatRoomLink)
                 .writer(writer)
+                .plan(plan)
                 .build();
     }
 }

@@ -1,5 +1,8 @@
 package com.team20.t4.plan;
 
+import com.team20.t4.plan.domain.Progress;
+import com.team20.t4.plan.domain.State;
+import com.team20.t4.plan.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +14,9 @@ public class PlanController {
 
     private final PlanService planService;
 
-    @GetMapping("/appointments/{memberId}")
-    public List<AppointmentPost> listMemberAppointments (@PathVariable Long memberId) {
-        return planService.listMyAppointments(memberId);
+    @GetMapping("/plan/permitted/list")
+    public ListAppointmentSimpleResponseDto listMemberAppointments() {
+        return planService.listMyPermittedAppointments();
     }
 
 

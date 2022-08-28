@@ -2,9 +2,14 @@ package com.team20.t4.plan;
 
 import com.team20.t4.common.exception.RequestErrorCode;
 import com.team20.t4.common.exception.RequestException;
+import com.team20.t4.member.MemberService;
 import com.team20.t4.member.domain.Member;
 import com.team20.t4.member.domain.MemberRepository;
+import com.team20.t4.plan.domain.*;
+import com.team20.t4.plan.dto.*;
+import com.team20.t4.post.domain.Post;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,10 +17,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PlanService {
-
+    private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final PlanRepository planRepository;
 
@@ -27,10 +33,11 @@ public class PlanService {
 
     // 밥약 생성(포스트 생성과 동시에 자동 생성 = create Plan)
     @Transactional
-    public Long createPlan(PlanSaveRequestDto dto) {
+    public Plan createPlan(PlanSaveRequestDto dto, Member loginedMember) {
+        dto.setLead(loginedMember);
         Plan planEntity = dto.toEntity();
-        planRepository.save(planEntity);
-        return planEntity.getId();
+
+        return planRepository.save(planEntity);
     }
 
     /**Post와 함께 Plan의 정보를 조회할 수 있는 메소드*/
@@ -40,15 +47,24 @@ public class PlanService {
     }
 
     @Transactional
-    public List<AppointmentPost> listMyAppointments(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND));
-        List<AppointmentPost> list = new ArrayList<>();
+    public ListAppointmentSimpleResponseDto listMyPermittedAppointments() {
+        Member loginedMember = memberService.getLoginedMember();
+        List<AppointmentSimpleResponseDto> list = new ArrayList<>();
 
-        for (RegisterHistory registerHistory : registerHistoryRepository.readRegisterHistoriesByMember(member)) {
-            list.add(new AppointmentPost(registerHistory, registerHistory.getPlan().getPost().getId()));
+        for (RegisterHistory registerHistory : registerHistoryRepository.readRegisterHistoriesByPermittedMember(loginedMember)) {
+            Plan plan = registerHistory.getPlan();
+            Post post = plan.getPost();
+            AppointmentSimpleResponseDto simpleResponseDto = new AppointmentSimpleResponseDto(post, plan);
+            // TODO : Plan에 수락된 인원 구하기 - 이거 엔티티에 넣는게 나을듯
+            simpleResponseDto.setNumOfPermittedParticipants(getNoPP(plan));
+            list.add(simpleResponseDto);
         }
-        return list;
+        ListAppointmentSimpleResponseDto responseDto = new ListAppointmentSimpleResponseDto(list);
+        return responseDto;
+    }
+
+    private Integer getNoPP(Plan plan) {
+        return 1;
     }
 
     // 밥약 시간 수정(Plan 수정)
@@ -86,6 +102,15 @@ public class PlanService {
     /**
      * RegisterHistory 관련 CRUD
      * */
+
+    public void sendAppointmentRequestOfWriter(RegisterHistorySaveRequestDto dto) {
+        RegisterHistory historyEntity = RegisterHistory.builder()
+                .applicant(dto.getApplicant())
+                .state(State.PERMITTED)
+                .plan(dto.getPlan())
+                .build();
+        registerHistoryRepository.save(historyEntity);
+    }
 
     // 밥약 신청(RegisterHistory 생성)
     @Transactional

@@ -1,4 +1,4 @@
-package com.team20.t4.plan;
+package com.team20.t4.plan.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

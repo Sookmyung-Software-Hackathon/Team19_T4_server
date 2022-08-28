@@ -1,6 +1,12 @@
 package com.team20.t4.post;
 
 import com.team20.t4.common.responseFormat.OnlyResponseString;
+import com.team20.t4.member.MemberService;
+import com.team20.t4.member.domain.Member;
+import com.team20.t4.plan.PlanService;
+import com.team20.t4.post.dto.PostResponseDto;
+import com.team20.t4.post.dto.PostSaveRequestDto;
+import com.team20.t4.post.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +15,14 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RestController
 public class PostController {
+    private final MemberService memberService;
     private final PostService postService;
+    private final PlanService planService;
 
     @PostMapping("/post/new")
     public Long saveNewPost(@RequestBody @Valid PostSaveRequestDto requestDto){
+//        Member loginedMember = memberService.getLoginedMember();
+//        planService.createPlan(requestDto.getPlan(), loginedMember);
         return postService.savePost(requestDto);
     }
 
