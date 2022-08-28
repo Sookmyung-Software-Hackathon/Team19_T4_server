@@ -5,6 +5,7 @@ import com.team20.t4.member.MemberService;
 import com.team20.t4.member.domain.Member;
 import com.team20.t4.plan.PlanService;
 import com.team20.t4.plan.dto.AppointmentSimpleResponseDto;
+import com.team20.t4.plan.dto.ListAppointmentSimpleResponseDto;
 import com.team20.t4.post.dto.PostResponseDto;
 import com.team20.t4.post.dto.PostSaveRequestDto;
 import com.team20.t4.post.dto.PostUpdateRequestDto;
@@ -23,8 +24,6 @@ public class PostController {
 
     @PostMapping("/post/new")
     public Long saveNewPost(@RequestBody @Valid PostSaveRequestDto requestDto){
-//        Member loginedMember = memberService.getLoginedMember();
-//        planService.createPlan(requestDto.getPlan(), loginedMember);
         return postService.savePost(requestDto);
     }
 
@@ -45,7 +44,7 @@ public class PostController {
     }
 
     @GetMapping("/member/posts")
-    public List<AppointmentSimpleResponseDto> getMyPostList(){
+    public ListAppointmentSimpleResponseDto getMyPostList(){
         return postService.getPostListWrittenByMe();
     }
 
