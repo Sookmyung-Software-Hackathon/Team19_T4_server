@@ -1,9 +1,13 @@
 package com.team20.t4.plan.domain;
 
+qimport com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+
+@Getter
 @AllArgsConstructor
 public enum Gu {
 

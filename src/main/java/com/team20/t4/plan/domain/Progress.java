@@ -3,7 +3,11 @@ package com.team20.t4.plan.domain;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public enum Progress {
     RECRUITING("인원모집중"),
