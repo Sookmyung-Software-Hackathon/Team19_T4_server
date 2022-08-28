@@ -13,6 +13,7 @@ public enum State {
     PERMITTED("수락"),
     DENIED("거절");
 
+    @JsonValue
     private String definition;
 
     @JsonCreator
