@@ -2,19 +2,19 @@ package com.team20.t4.post;
 
 import com.team20.t4.common.responseFormat.OnlyResponseString;
 import com.team20.t4.member.MemberService;
-import com.team20.t4.member.domain.Member;
 import com.team20.t4.plan.PlanService;
-import com.team20.t4.plan.dto.AppointmentSimpleResponseDto;
+import com.team20.t4.plan.domain.Location;
 import com.team20.t4.plan.dto.ListAppointmentSimpleResponseDto;
 import com.team20.t4.post.dto.PostResponseDto;
 import com.team20.t4.post.dto.PostSaveRequestDto;
 import com.team20.t4.post.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class PostController {
@@ -25,6 +25,13 @@ public class PostController {
     @PostMapping("/post/new")
     public Long saveNewPost(@RequestBody @Valid PostSaveRequestDto requestDto){
         return postService.savePost(requestDto);
+    }
+
+    @GetMapping("/post/location")
+    public ListAppointmentSimpleResponseDto getPostListByLocation(@RequestBody Location location){
+        log.info(location.toString());
+        log.info(location.getGu().getValue());
+        return postService.getPostListByLocation(location);
     }
 
     @GetMapping("/post/{postId}")

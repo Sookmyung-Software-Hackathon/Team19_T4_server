@@ -9,6 +9,7 @@ import com.team20.t4.plan.PlanService;
 import com.team20.t4.plan.domain.Plan;
 import com.team20.t4.plan.domain.RegisterHistory;
 import com.team20.t4.plan.domain.RegisterHistoryRepository;
+import com.team20.t4.post.domain.Post;
 import com.team20.t4.security.JwtProvider;
 import com.team20.t4.security.SecurityUtil;
 import com.team20.t4.security.dto.TokenDto;
