@@ -4,6 +4,9 @@ import com.team20.t4.common.exception.RequestErrorCode;
 import com.team20.t4.common.exception.RequestException;
 import com.team20.t4.common.responseFormat.OnlyResponseString;
 import com.team20.t4.member.MemberService;
+
+import com.team20.t4.plan.PlanService;
+import com.team20.t4.plan.domain.Gu;
 import com.team20.t4.plan.domain.Location;
 
 import com.team20.t4.plan.dto.ListAppointmentSimpleResponseDto;
@@ -34,7 +37,7 @@ public class PostController {
         return postService.savePost(requestDto);
     }
 
-    @GetMapping("/post/location")
+    @PostMapping("/post/location")
     public ListAppointmentSimpleResponseDto getPostListByLocation(@RequestBody LocationRequestDto location){
         Location gotLocation = location.getLocation();
         return postService.getPostListByLocation(gotLocation);
