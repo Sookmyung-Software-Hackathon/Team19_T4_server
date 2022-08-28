@@ -3,6 +3,7 @@ package com.team20.t4.member;
 import com.team20.t4.common.responseFormat.OnlyResponseString;
 import com.team20.t4.member.dto.*;
 import com.team20.t4.plan.domain.Plan;
+import com.team20.t4.post.domain.Post;
 import com.team20.t4.security.dto.TokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class MemberController {
     public List<Plan> getMemberPlansList() {
         return memberService.getMemberPlansList();
     }
+
 
     @PostMapping("/member/info/profile")
     public OnlyResponseString updateMemberProfile(@RequestBody @Valid MemberProfileUpdateRequestDto requestDto){

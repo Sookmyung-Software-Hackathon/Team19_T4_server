@@ -44,6 +44,7 @@ public class PostService {
         saveRequestVo.updateWriter(loginedMember);
         saveRequestVo.updatePlan(plan);
         Post savedPost = postRepository.save(saveRequestVo.toEntity());
+        loginedMember.getMemberPosts().add(saveRequestVo.toEntity());
         return savedPost.getId();
     }
 
