@@ -35,6 +35,7 @@ public class PlanService {
     @Transactional
     public Plan createPlan(PlanSaveRequestDto dto, Member loginedMember) {
         dto.setLead(loginedMember);
+        dto.setProgress(Progress.RECRUITING);
         Plan planEntity = dto.toEntity();
 
         return planRepository.save(planEntity);

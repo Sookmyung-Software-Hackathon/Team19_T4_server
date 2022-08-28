@@ -4,7 +4,7 @@ import com.team20.t4.plan.domain.State;
 import lombok.Getter;
 
 @Getter
-public class StateUpdateDto {
+public class UpdateStateDto {
 
     private State state;
 }

@@ -1,7 +1,6 @@
 package com.team20.t4.plan;
 
 import com.team20.t4.plan.domain.Progress;
-import com.team20.t4.plan.domain.ProgressUpdateDto;
 import com.team20.t4.plan.domain.State;
 import com.team20.t4.plan.dto.*;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,7 @@ public class PlanController {
     }
 
     @PostMapping("/plan/progress/{planId}")
-    public Long updateProgress(@PathVariable Long planId, @RequestBody ProgressUpdateDto progress) {
+    public Long updateProgress(@PathVariable Long planId, @RequestBody UpdateProgressDto progress) {
         return planService.updateProgressState(planId, progress.getProgress());
     }
 
@@ -43,7 +42,7 @@ public class PlanController {
     }
 
     @PostMapping("/registerHistory/state/{registerHistoryId}")
-    public Long updateState(@PathVariable Long registerHistoryId, @RequestBody StateUpdateDto state) {
+    public Long updateState(@PathVariable Long registerHistoryId, @RequestBody UpdateStateDto state) {
         return planService.response(registerHistoryId, state.getState());
     }
 }
