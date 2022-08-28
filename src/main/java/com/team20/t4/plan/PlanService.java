@@ -51,6 +51,7 @@ public class PlanService {
         Member loginedMember = memberService.getLoginedMember();
         List<AppointmentSimpleResponseDto> list = new ArrayList<>();
 
+        /**
         for (RegisterHistory registerHistory : registerHistoryRepository.readRegisterHistoriesByPermittedMember(loginedMember)) {
             Plan plan = registerHistory.getPlan();
             Post post = plan.getPost();
@@ -58,7 +59,7 @@ public class PlanService {
             // TODO : Plan에 수락된 인원 구하기 - 이거 엔티티에 넣는게 나을듯
             simpleResponseDto.setNumOfPermittedParticipants(getNoPP(plan));
             list.add(simpleResponseDto);
-        }
+        }**/
         ListAppointmentSimpleResponseDto responseDto = new ListAppointmentSimpleResponseDto(list);
         return responseDto;
     }
@@ -105,9 +106,9 @@ public class PlanService {
 
     public void sendAppointmentRequestOfWriter(RegisterHistorySaveRequestDto dto) {
         RegisterHistory historyEntity = RegisterHistory.builder()
-                .applicant(dto.getApplicant())
+                .applicant(memberService.getLoginedMember())
                 .state(State.PERMITTED)
-                .plan(dto.getPlan())
+                .plan(planRepository.findById(dto.getPlanId()).get())
                 .build();
         registerHistoryRepository.save(historyEntity);
     }
@@ -116,9 +117,9 @@ public class PlanService {
     @Transactional
     public Long sendAppointmentRequest(RegisterHistorySaveRequestDto dto) {
         RegisterHistory historyEntity = RegisterHistory.builder()
-                .applicant(dto.getApplicant())
+                .applicant(memberService.getLoginedMember())
                 .state(State.DEFAULT)
-                .plan(dto.getPlan())
+                .plan(planRepository.findById(dto.getPlanId()).get())
                 .build();
         registerHistoryRepository.save(historyEntity);
         return historyEntity.getId();
@@ -129,6 +130,11 @@ public class PlanService {
         RegisterHistory registerHistoryEntity = registerHistoryRepository.findById(registerHistoryId)
                 .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND));
         registerHistoryEntity.setState(newState);
+        if (newState == State.PERMITTED) {
+            Plan plan = registerHistoryEntity.getPlan();
+            plan.setNumOfPermittedMember(plan.getNumOfPermittedMember()+1);
+        }
+        //TODO: 모집인원 찼는데 수락 누르면 예외 처리
         return registerHistoryEntity.getId();
     }
 

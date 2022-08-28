@@ -38,7 +38,7 @@ public class PostService {
     public Long savePost(PostSaveRequestDto requestDto){
         Member loginedMember = memberService.getLoginedMember();
         Plan plan = planService.createPlan(requestDto.getPlan(), loginedMember);
-        planService.sendAppointmentRequestOfWriter(new RegisterHistorySaveRequestDto(loginedMember, plan));
+        planService.sendAppointmentRequestOfWriter(new RegisterHistorySaveRequestDto(plan.getId()));
 
         PostSaveRequestVo saveRequestVo = PostSaveRequestVo.of(requestDto);
         saveRequestVo.updateWriter(loginedMember);

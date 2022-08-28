@@ -35,6 +35,10 @@ public class Plan {
     private Integer numOfParticipants;
 
     @Setter
+    @Column(name = "num_of_permitted_member", nullable = false)
+    private Integer numOfPermittedMember;
+
+    @Setter
     @Column(name = "appointment_time", nullable = false)
     private LocalDateTime appointmentTime;
 
@@ -55,6 +59,7 @@ public class Plan {
     @OneToMany(mappedBy = "plan")
     private List<RegisterHistory> registerHistories = new ArrayList<>();
 
+
     @Setter
     @Column(name = "progress", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -71,6 +76,7 @@ public class Plan {
         this.lead = lead;
         this.post = post;
         this.numOfParticipants = numOfParticipants;
+        this.numOfPermittedMember = 1;
         this.appointmentTime = appointmentTime;
         this.foodType = foodType;
         this.restaurant = restaurant;

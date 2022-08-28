@@ -2,12 +2,14 @@ package com.team20.t4.member;
 
 import com.team20.t4.common.responseFormat.OnlyResponseString;
 import com.team20.t4.member.dto.*;
+import com.team20.t4.plan.domain.Plan;
 import com.team20.t4.security.dto.TokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,6 +35,11 @@ public class MemberController {
     @GetMapping("/member/info") // 이미지 url 추가
     public MemberInfoResponseDto getInfo(){
         return memberService.getMemberInfo();
+    }
+
+    @GetMapping("/member/plans")
+    public List<Plan> getMemberPlansList() {
+        return memberService.getMemberPlansList();
     }
 
     @PostMapping("/member/info/profile")
