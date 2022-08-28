@@ -78,7 +78,7 @@ public class PlanService {
 
     // 밥약 장소, 시간, 음식종류, 음식점 수정 (Plan 수정)
     @Transactional
-    public Long updatePlan(Long planId, PlanUpdateRequestDto dto) {
+    public Plan updatePlan(Long planId, PlanUpdateRequestDto dto) {
         Plan plan = planRepository.findById(planId)
                 .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND));
 
@@ -86,7 +86,7 @@ public class PlanService {
         plan.setLocation(dto.getLocation());
         plan.setFoodType(dto.getFoodType());
         plan.setRestaurant(dto.getRestaurant());
-        return plan.getId();
+        return plan;
     }
 
     // 밥약 진행 상태 수정 (Plan 수정)

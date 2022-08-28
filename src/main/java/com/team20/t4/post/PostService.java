@@ -54,14 +54,18 @@ public class PostService {
 
     @Transactional
     public Long updatePost(Long postId, PostUpdateRequestDto requestDto) throws RequestException{
-        checkPostExists(postId);
-        Post updatedPost = postRepository.save(requestDto.toEntity(postId));
+        Member loginedMember = memberService.getLoginedMember();
+        Plan plan = planService.updatePlan(getPost(postId).getPlan().getId(), requestDto.getPlan());
+        Post post = requestDto.toEntity(postId);
+        post.updatePlan(plan);
+        post.updateWriter(loginedMember);
+        Post updatedPost = postRepository.save(post);
         return updatedPost.getId();
     }
 
-    private void checkPostExists(Long postId) {
-        if(!postRepository.existsById(postId))
-            throw new RequestException(RequestErrorCode.NOT_FOUND, "요청한 Post가 존재하지 않습니다.");
+    private Post getPost(Long postId) {
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "요청한 Post가 존재하지 않습니다."));
     }
 
     @Transactional

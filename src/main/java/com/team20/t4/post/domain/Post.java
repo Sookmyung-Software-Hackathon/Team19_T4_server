@@ -38,4 +38,13 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "plan_pk")
     private Plan plan;
 
+    // update //
+    public void updatePlan(Plan plan){
+        this.plan = plan;
+    }
+
+    public void updateWriter(Member writer){
+        this.writer = writer;
+    }
+
 }
