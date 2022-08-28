@@ -38,6 +38,11 @@ public class MemberController {
         return memberService.getMemberInfo();
     }
 
+    @GetMapping("/member/{memberPk}/info")
+    public MemberInfoAndReviewListResponseDto getInfoAnotherMember(@PathVariable Long memberPk){
+        return memberService.getMemberInfo(memberPk);
+    }
+
     @GetMapping("/member/plans")
     public List<Plan> getMemberPlansList() {
         return memberService.getMemberPlansList();
