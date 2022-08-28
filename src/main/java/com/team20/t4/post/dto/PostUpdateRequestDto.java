@@ -1,5 +1,7 @@
 package com.team20.t4.post.dto;
 
+import com.team20.t4.plan.dto.PlanSaveRequestDto;
+import com.team20.t4.plan.dto.PlanUpdateRequestDto;
 import com.team20.t4.post.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +20,7 @@ public class PostUpdateRequestDto {
     private String content;
     @Size(max = 255, message = "chatRoomLink는 255자 이하여야합니다.")
     private String chatRoomLink;
-    //    private PlanSaveRequestDto plan;
+    private PlanUpdateRequestDto plan;
 
     public Post toEntity(Long postId) {
         return Post.builder()

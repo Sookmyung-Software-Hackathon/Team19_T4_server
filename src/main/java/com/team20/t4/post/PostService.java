@@ -5,7 +5,9 @@ import com.team20.t4.common.exception.RequestException;
 import com.team20.t4.member.MemberService;
 import com.team20.t4.member.domain.Member;
 import com.team20.t4.plan.PlanService;
+import com.team20.t4.plan.domain.Location;
 import com.team20.t4.plan.domain.Plan;
+import com.team20.t4.plan.domain.PlanRepository;
 import com.team20.t4.plan.dto.AppointmentSimpleResponseDto;
 import com.team20.t4.plan.dto.ListAppointmentSimpleResponseDto;
 import com.team20.t4.plan.dto.RegisterHistorySaveRequestDto;
@@ -16,18 +18,21 @@ import com.team20.t4.post.dto.PostSaveRequestDto;
 import com.team20.t4.post.dto.PostSaveRequestVo;
 import com.team20.t4.post.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PostService {
     private final PostRepository postRepository;
     private final MemberService memberService;
     private final PlanService planService;
+    private final PlanRepository planRepository;
 
     @Transactional
     public Long savePost(PostSaveRequestDto requestDto){
@@ -54,14 +59,18 @@ public class PostService {
 
     @Transactional
     public Long updatePost(Long postId, PostUpdateRequestDto requestDto) throws RequestException{
-        checkPostExists(postId);
-        Post updatedPost = postRepository.save(requestDto.toEntity(postId));
+        Member loginedMember = memberService.getLoginedMember();
+        Plan plan = planService.updatePlan(getPost(postId).getPlan().getId(), requestDto.getPlan());
+        Post post = requestDto.toEntity(postId);
+        post.updatePlan(plan);
+        post.updateWriter(loginedMember);
+        Post updatedPost = postRepository.save(post);
         return updatedPost.getId();
     }
 
-    private void checkPostExists(Long postId) {
-        if(!postRepository.existsById(postId))
-            throw new RequestException(RequestErrorCode.NOT_FOUND, "요청한 Post가 존재하지 않습니다.");
+    private Post getPost(Long postId) {
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "요청한 Post가 존재하지 않습니다."));
     }
 
     @Transactional
@@ -86,4 +95,15 @@ public class PostService {
     // 리스트 조회
     // 검색 기준 : 위치
     // 정렬 기준 : 최근 수정순
+    @Transactional
+    public ListAppointmentSimpleResponseDto getPostListByLocation(Location location){
+        log.info(location.getGu().getValue());
+        List<AppointmentSimpleResponseDto> responseDtoList = new ArrayList<>();
+        List<Plan> planList = planRepository.findAllByLocation(location);
+        for(Plan plan:planList){
+            responseDtoList.add(new AppointmentSimpleResponseDto(plan.getPost(), plan));
+        }
+        return new ListAppointmentSimpleResponseDto(responseDtoList);
+    }
+
 }
