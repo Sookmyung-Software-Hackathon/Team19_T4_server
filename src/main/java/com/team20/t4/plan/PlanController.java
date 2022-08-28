@@ -38,8 +38,8 @@ public class PlanController {
     }
 
     @PostMapping("/registerHistory/state/{registerHistoryId}")
-    public Long updateState(@PathVariable Long registerHistoryId, @RequestBody UpdateStateDto state) {
-        return planService.response(registerHistoryId, state.getState());
+    public Long updateState(@PathVariable Long registerHistoryId, @RequestBody UpdateStateDto stateDto) {
+        return planService.response(registerHistoryId, stateDto.getState());
     }
 
     @GetMapping("/member/plan/scheduled")

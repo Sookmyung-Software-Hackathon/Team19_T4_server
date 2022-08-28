@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Persister;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -58,6 +59,9 @@ public class Plan {
 
     @OneToMany(mappedBy = "plan")
     private List<RegisterHistory> registerHistories = new ArrayList<>();
+
+    @OneToMany
+    private List<Member> applicants = new ArrayList<>();
 
 
     @Setter
