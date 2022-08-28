@@ -39,9 +39,9 @@ public class MemberController {
         return memberService.getMemberInfo();
     }
 
-    @GetMapping("/member/info/other")
-    public MemberInfoAndReviewListResponseDto getInfoAnotherMember(@RequestBody Map<String, String> memberId){
-        return memberService.getMemberInfo(memberId.get("memberId"));
+    @GetMapping("/member/info/other/{memberId}")
+    public MemberInfoAndReviewListResponseDto getInfoAnotherMember(@PathVariable String memberId){
+        return memberService.getMemberInfo(memberId);
     }
 
     @GetMapping("/member/plans")
