@@ -1,12 +1,8 @@
 package com.team20.t4.plan;
 
-import com.team20.t4.plan.domain.Progress;
-import com.team20.t4.plan.domain.State;
 import com.team20.t4.plan.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -44,5 +40,10 @@ public class PlanController {
     @PostMapping("/registerHistory/state/{registerHistoryId}")
     public Long updateState(@PathVariable Long registerHistoryId, @RequestBody UpdateStateDto stateDto) {
         return planService.response(registerHistoryId, stateDto.getState());
+    }
+
+    @GetMapping("/member/plan/scheduled")
+    public ListAppointmentSimpleResponseDto getScheduledPlan(){
+        return planService.getScheduledPlan();
     }
 }
