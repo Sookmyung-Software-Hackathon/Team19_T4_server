@@ -4,6 +4,7 @@ import com.team20.t4.common.responseFormat.OnlyResponseString;
 import com.team20.t4.member.MemberService;
 import com.team20.t4.member.domain.Member;
 import com.team20.t4.plan.PlanService;
+import com.team20.t4.plan.dto.AppointmentSimpleResponseDto;
 import com.team20.t4.post.dto.PostResponseDto;
 import com.team20.t4.post.dto.PostSaveRequestDto;
 import com.team20.t4.post.dto.PostUpdateRequestDto;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -40,6 +42,11 @@ public class PostController {
     public OnlyResponseString deletePost(@PathVariable Long postId){
         postService.deletePost(postId);
         return new OnlyResponseString("Post 삭제에 성공했습니다.");
+    }
+
+    @GetMapping("/member/posts")
+    public List<AppointmentSimpleResponseDto> getMyPostList(){
+        return postService.getPostListWrittenByMe();
     }
 
 }
