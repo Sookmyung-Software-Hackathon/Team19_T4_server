@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface RegisterHistoryRepository extends JpaRepository<RegisterHistory, Long> {
 
+    /**
     @Query("SELECT h FROM RegisterHistory h where h.applicant = :applicant and h.state = com.team20.t4.plan.domain.State.PERMITTED")
     List<RegisterHistory> readRegisterHistoriesByPermittedMember(@Param("applicant") Member applicant);
+    **/
 }

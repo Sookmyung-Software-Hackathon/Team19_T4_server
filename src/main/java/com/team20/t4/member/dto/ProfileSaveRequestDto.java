@@ -28,16 +28,13 @@ public class ProfileSaveRequestDto {
     
     @NotNull(message = "성별은 null 값일 수 없습니다.")
     private Sex sex;
-    private String mbti;
-    private String introduction;
+
     private Float score;
 
     public Profile toEntity() {
         return Profile.builder()
                 .birthYear(birthYear)
                 .sex(sex)
-                .mbti(mbti)
-                .introduction(introduction)
                 .score((float) 0)
                 .build();
     }
