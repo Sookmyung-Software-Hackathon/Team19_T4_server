@@ -136,21 +136,21 @@ public class MemberService {
     }
 
     @Transactional
-    public MemberInfoAndReviewListResponseDto getMemberInfo(Long memberPk){
-        Member memberByMemberPk = getMemberByMemberPk(memberPk);
-        List<ReviewResponseDtoByTarget> reviewListOfOther = getReviewListOfOther(memberPk);
-        MemberInfoResponseDto memberInfoResponseDto = MemberInfoResponseDto.toDtoWithProfileImage(memberByMemberPk, getImgUrl(memberByMemberPk));
+    public MemberInfoAndReviewListResponseDto getMemberInfo(String memberId){
+        Member memberByMemberId = getMemberByMemberId(memberId);
+        List<ReviewResponseDtoByTarget> reviewListOfOther = getReviewListOfOther(memberId);
+        MemberInfoResponseDto memberInfoResponseDto = MemberInfoResponseDto.toDtoWithProfileImage(memberByMemberId, getImgUrl(memberByMemberId));
         return new MemberInfoAndReviewListResponseDto(reviewListOfOther, memberInfoResponseDto);
     }
 
-    public List<ReviewResponseDtoByTarget> getReviewListOfOther(Long memberPk) throws RequestException {
-        Member target = getMemberByMemberPk(memberPk);
+    public List<ReviewResponseDtoByTarget> getReviewListOfOther(String memberId) throws RequestException {
+        Member target = getMemberByMemberId(memberId);
         List<Review> reviewList = reviewRepository.findAllByTarget(target);
         return getReviewResponseDtoByTargetList(reviewList);
     }
 
-    private Member getMemberByMemberPk(Long memberPk) {
-        return memberRepository.findById(memberPk)
+    private Member getMemberByMemberId(String memberId) {
+        return memberRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "회원가입하지 않은 아이디입니다."));
     }
 
