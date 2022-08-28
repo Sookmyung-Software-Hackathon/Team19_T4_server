@@ -31,19 +31,5 @@ public class AppointmentSimpleResponseDto {
         this.numOfPermittedMember = plan.getNumOfPermittedMember();
     }
 
-    @JsonCreator
-    public static FoodType from(String value) {
-        for (FoodType status : FoodType.values()) {
-            if (status.getValue().equals(value)) {
-                return status;
-            }
-        }
-        return null;
-    }
-
-    @JsonValue
-    public String getDefinition() {
-        return getDefinition();
-    }
 
 }
