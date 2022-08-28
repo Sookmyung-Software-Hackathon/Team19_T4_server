@@ -28,7 +28,7 @@ public class PlanController {
     /**아래 메소드 지우고 Post 수정할 때 PlanService.updatePlan() 같이 호출해도 됨*/
     @PostMapping("/plan/{planId}")
     public Long updatePlan(@PathVariable Long planId, @RequestBody PlanUpdateRequestDto dto) {
-        return planService.updatePlan(planId, dto);
+        return planService.updatePlan(planId, dto).getId();
     }
 
     @PostMapping("/plan/progress/{planId}")
