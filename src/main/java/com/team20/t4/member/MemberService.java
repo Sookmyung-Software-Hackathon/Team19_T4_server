@@ -10,6 +10,10 @@ import com.team20.t4.plan.domain.Plan;
 import com.team20.t4.plan.domain.RegisterHistory;
 import com.team20.t4.plan.domain.RegisterHistoryRepository;
 import com.team20.t4.post.domain.Post;
+import com.team20.t4.review.Review;
+import com.team20.t4.review.ReviewRepository;
+import com.team20.t4.review.ReviewService;
+import com.team20.t4.review.dto.ReviewResponseDtoByTarget;
 import com.team20.t4.security.JwtProvider;
 import com.team20.t4.security.SecurityUtil;
 import com.team20.t4.security.dto.TokenDto;
@@ -26,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,6 +41,7 @@ public class MemberService {
     private final PasswordEncoder pwdEncorder;
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
+    private final ReviewRepository reviewRepository;
     private final S3Util s3Util;
 
     private final RegisterHistoryRepository registerHistoryRepository;
@@ -129,11 +135,36 @@ public class MemberService {
         return MemberInfoResponseDto.toDtoWithProfileImage(loginedMember, getImgUrl(loginedMember));
     }
 
+    @Transactional
+    public MemberInfoAndReviewListResponseDto getMemberInfo(String memberId){
+        Member memberByMemberId = getMemberByMemberId(memberId);
+        List<ReviewResponseDtoByTarget> reviewListOfOther = getReviewListOfOther(memberId);
+        MemberInfoResponseDto memberInfoResponseDto = MemberInfoResponseDto.toDtoWithProfileImage(memberByMemberId, getImgUrl(memberByMemberId));
+        return new MemberInfoAndReviewListResponseDto(reviewListOfOther, memberInfoResponseDto);
+    }
+
+    public List<ReviewResponseDtoByTarget> getReviewListOfOther(String memberId) throws RequestException {
+        Member target = getMemberByMemberId(memberId);
+        List<Review> reviewList = reviewRepository.findAllByTarget(target);
+        return getReviewResponseDtoByTargetList(reviewList);
+    }
+
+    private Member getMemberByMemberId(String memberId) {
+        return memberRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND, "회원가입하지 않은 아이디입니다."));
+    }
+
+    private List<ReviewResponseDtoByTarget> getReviewResponseDtoByTargetList(List<Review> reviewList) {
+        return reviewList.stream().map(
+                review -> ReviewResponseDtoByTarget.of(review)
+        ).collect(Collectors.toList());
+    }
+
     private String getImgUrl(Member loginedMember) {
         Optional<MemberProfileImg> optionalMemberProfileImg = memberProfileImgRepository.findByMember(loginedMember);
         String imgUrl;
         if(optionalMemberProfileImg.isEmpty()){
-            imgUrl = s3Util.getUrl("member-profile-image/유튜브_기본프로필_하늘색.jpg");
+            imgUrl = s3Util.getUrl("member-profile-image/mealmate_default_profile_image.jpg");
         }
         else{
             imgUrl = s3Util.getUrl(optionalMemberProfileImg.get().getFileKey());

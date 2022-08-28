@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -36,6 +37,11 @@ public class MemberController {
     @GetMapping("/member/info") // 이미지 url 추가
     public MemberInfoResponseDto getInfo(){
         return memberService.getMemberInfo();
+    }
+
+    @GetMapping("/member/info/other")
+    public MemberInfoAndReviewListResponseDto getInfoAnotherMember(@RequestBody Map<String, String> memberId){
+        return memberService.getMemberInfo(memberId.get("memberId"));
     }
 
     @GetMapping("/member/plans")
