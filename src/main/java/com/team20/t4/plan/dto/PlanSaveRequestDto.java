@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 public class PlanSaveRequestDto {
 
     @Setter private Member lead;
-    private Progress progress;
+    @Setter private Progress progress;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

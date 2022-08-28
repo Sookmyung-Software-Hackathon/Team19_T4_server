@@ -1,0 +1,10 @@
+package com.team20.t4.plan.dto;
+
+import com.team20.t4.plan.domain.State;
+import lombok.Getter;
+
+@Getter
+public class UpdateStateDto {
+
+    private State state;
+}
