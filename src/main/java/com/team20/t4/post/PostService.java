@@ -119,4 +119,14 @@ public class PostService {
         return new ListAppointmentSimpleResponseDto(responseDtoList);
     }
 
+    @Transactional
+    public List<String> getGuList(){
+        List<String> guList = new ArrayList<>();
+        Gu[] values = Gu.values();
+        for(Gu gu:values){
+            guList.add(gu.getValue());
+        }
+        return guList;
+    }
+
 }

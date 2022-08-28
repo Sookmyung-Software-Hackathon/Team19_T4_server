@@ -69,4 +69,8 @@ public class PostController {
         return postService.getPostListWrittenByMe();
     }
 
+    @GetMapping("/locations")
+    public List<String> getGus(){
+        return postService.getGuList();
+    }
 }
