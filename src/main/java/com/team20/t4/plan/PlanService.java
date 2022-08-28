@@ -37,7 +37,7 @@ public class PlanService {
         dto.setLead(loginedMember);
         dto.setProgress(Progress.RECRUITING);
         Plan planEntity = dto.toEntity();
-
+        planEntity.getApplicants().add(loginedMember);
         return planRepository.save(planEntity);
     }
 
