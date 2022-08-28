@@ -5,6 +5,10 @@ import com.team20.t4.common.exception.RequestException;
 import com.team20.t4.common.s3.S3Util;
 import com.team20.t4.member.domain.*;
 import com.team20.t4.member.dto.*;
+import com.team20.t4.plan.PlanService;
+import com.team20.t4.plan.domain.Plan;
+import com.team20.t4.plan.domain.RegisterHistory;
+import com.team20.t4.plan.domain.RegisterHistoryRepository;
 import com.team20.t4.security.JwtProvider;
 import com.team20.t4.security.SecurityUtil;
 import com.team20.t4.security.dto.TokenDto;
@@ -18,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -30,6 +36,8 @@ public class MemberService {
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
     private final S3Util s3Util;
+
+    private final RegisterHistoryRepository registerHistoryRepository;
 
     public Member getLoginedMember(){
         return SecurityUtil.getCurrentUserPk().flatMap(memberRepository::findById)
@@ -130,6 +138,17 @@ public class MemberService {
             imgUrl = s3Util.getUrl(optionalMemberProfileImg.get().getFileKey());
         }
         return imgUrl;
+    }
+
+    @Transactional
+    public List<Plan> getMemberPlansList() {
+        Member loginedMember = getLoginedMember();
+        List<Plan> result = new ArrayList<>();
+        for (RegisterHistory registerHistory:registerHistoryRepository.readRegisterHistoriesByPermittedMember(loginedMember)){
+            result.add(registerHistory.getPlan());
+        }
+
+        return result;
     }
 
     @Transactional
