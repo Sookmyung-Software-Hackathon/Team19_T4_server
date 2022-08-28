@@ -1,7 +1,5 @@
 package com.team20.t4.plan.dto;
 
-
-import com.team20.t4.member.domain.Member;
 import com.team20.t4.plan.domain.FoodType;
 import com.team20.t4.plan.domain.Location;
 import com.team20.t4.plan.domain.Plan;
@@ -15,21 +13,21 @@ import java.time.LocalDateTime;
 @Getter
 public class PlanInfoResponseDto {
 
-    private Member lead;
+    private String leadId;
     private Integer numOfParticipants;
     private LocalDateTime appointmentTime;
-    private FoodType foodType;
+    private String foodType;
     private String restaurant;
-    private Location location;
+    private String location;
 
     @Builder
-    public PlanInfoResponseDto(Member lead,
+    public PlanInfoResponseDto(String leadId,
                                Integer numOfParticipants,
                                LocalDateTime appointmentTime,
-                               FoodType foodType,
+                               String foodType,
                                String restaurant,
-                               Location location) {
-        this.lead = lead;
+                               String location) {
+        this.leadId = leadId;
         this.numOfParticipants = numOfParticipants;
         this.appointmentTime = appointmentTime;
         this.foodType = foodType;
@@ -39,12 +37,12 @@ public class PlanInfoResponseDto {
 
     public static PlanInfoResponseDto of(Plan plan) {
         return PlanInfoResponseDto.builder()
-                .lead(plan.getLead())
+                .leadId(plan.getLead().getMemberId())
                 .numOfParticipants(plan.getNumOfParticipants())
                 .appointmentTime(plan.getAppointmentTime())
-                .foodType(plan.getFoodType())
+                .foodType(plan.getFoodType().getValue())
                 .restaurant(plan.getRestaurant())
-                .location(plan.getLocation())
+                .location(plan.getLocation().getGu().getValue())
                 .build();
 
     }

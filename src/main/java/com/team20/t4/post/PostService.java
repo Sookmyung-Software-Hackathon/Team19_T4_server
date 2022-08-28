@@ -7,6 +7,7 @@ import com.team20.t4.member.domain.Member;
 import com.team20.t4.plan.PlanService;
 import com.team20.t4.plan.domain.Plan;
 import com.team20.t4.plan.dto.AppointmentSimpleResponseDto;
+import com.team20.t4.plan.dto.ListAppointmentSimpleResponseDto;
 import com.team20.t4.plan.dto.RegisterHistorySaveRequestDto;
 import com.team20.t4.post.domain.Post;
 import com.team20.t4.post.domain.PostRepository;
@@ -71,14 +72,14 @@ public class PostService {
     }
 
     @Transactional
-    public List<AppointmentSimpleResponseDto> getPostListWrittenByMe(){
+    public ListAppointmentSimpleResponseDto getPostListWrittenByMe(){
         Member loginedMember = memberService.getLoginedMember();
         List<AppointmentSimpleResponseDto> responseDtoList = new ArrayList<>();
         List<Post> postList = postRepository.findAllByWriter(loginedMember);
         for(Post post:postList){
             responseDtoList.add(new AppointmentSimpleResponseDto(post, post.getPlan()));
         }
-        return responseDtoList;
+        return new ListAppointmentSimpleResponseDto(responseDtoList);
     }
 
 
