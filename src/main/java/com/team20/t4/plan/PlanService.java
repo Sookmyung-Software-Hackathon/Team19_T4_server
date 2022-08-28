@@ -51,15 +51,13 @@ public class PlanService {
         Member loginedMember = memberService.getLoginedMember();
         List<AppointmentSimpleResponseDto> list = new ArrayList<>();
 
-        /**
         for (RegisterHistory registerHistory : registerHistoryRepository.readRegisterHistoriesByPermittedMember(loginedMember)) {
             Plan plan = registerHistory.getPlan();
             Post post = plan.getPost();
             AppointmentSimpleResponseDto simpleResponseDto = new AppointmentSimpleResponseDto(post, plan);
             // TODO : Plan에 수락된 인원 구하기 - 이거 엔티티에 넣는게 나을듯
-            simpleResponseDto.setNumOfPermittedParticipants(getNoPP(plan));
             list.add(simpleResponseDto);
-        }**/
+        }
         ListAppointmentSimpleResponseDto responseDto = new ListAppointmentSimpleResponseDto(list);
         return responseDto;
     }
@@ -79,7 +77,7 @@ public class PlanService {
 
     // 밥약 장소, 시간, 음식종류, 음식점 수정 (Plan 수정)
     @Transactional
-    public Long updatePlan(Long planId, PlanUpdateRequestDto dto) {
+    public Plan updatePlan(Long planId, PlanUpdateRequestDto dto) {
         Plan plan = planRepository.findById(planId)
                 .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND));
 
@@ -87,7 +85,7 @@ public class PlanService {
         plan.setLocation(dto.getLocation());
         plan.setFoodType(dto.getFoodType());
         plan.setRestaurant(dto.getRestaurant());
-        return plan.getId();
+        return plan;
     }
 
     // 밥약 진행 상태 수정 (Plan 수정)
@@ -133,6 +131,7 @@ public class PlanService {
         if (newState == State.PERMITTED) {
             Plan plan = registerHistoryEntity.getPlan();
             plan.setNumOfPermittedMember(plan.getNumOfPermittedMember()+1);
+            registerHistoryEntity.setState(newState);
         }
         //TODO: 모집인원 찼는데 수락 누르면 예외 처리
         return registerHistoryEntity.getId();
