@@ -4,20 +4,13 @@ import com.team20.t4.common.exception.RequestErrorCode;
 import com.team20.t4.common.exception.RequestException;
 import com.team20.t4.common.responseFormat.OnlyResponseString;
 import com.team20.t4.member.MemberService;
-import com.team20.t4.member.domain.Member;
-import com.team20.t4.member.dto.ApplicantInfoDto;
-import com.team20.t4.plan.PlanService;
 import com.team20.t4.plan.domain.Location;
-import com.team20.t4.plan.domain.RegisterHistory;
-import com.team20.t4.plan.domain.RegisterHistoryRepository;
+
 import com.team20.t4.plan.dto.ListAppointmentSimpleResponseDto;
-<<<<<<< HEAD
-import com.team20.t4.post.domain.Post;
-import com.team20.t4.post.domain.PostRepository;
+
 import com.team20.t4.post.dto.ListMemberResponseDto;
-=======
 import com.team20.t4.post.dto.LocationRequestDto;
->>>>>>> 67e8db5d7cc13d6a44a8c9e87a27f0cd9fd1100f
+
 import com.team20.t4.post.dto.PostResponseDto;
 import com.team20.t4.post.dto.PostSaveRequestDto;
 import com.team20.t4.post.dto.PostUpdateRequestDto;
