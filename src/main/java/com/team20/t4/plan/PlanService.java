@@ -51,15 +51,13 @@ public class PlanService {
         Member loginedMember = memberService.getLoginedMember();
         List<AppointmentSimpleResponseDto> list = new ArrayList<>();
 
-        /**
         for (RegisterHistory registerHistory : registerHistoryRepository.readRegisterHistoriesByPermittedMember(loginedMember)) {
             Plan plan = registerHistory.getPlan();
             Post post = plan.getPost();
             AppointmentSimpleResponseDto simpleResponseDto = new AppointmentSimpleResponseDto(post, plan);
             // TODO : Plan에 수락된 인원 구하기 - 이거 엔티티에 넣는게 나을듯
-            simpleResponseDto.setNumOfPermittedParticipants(getNoPP(plan));
             list.add(simpleResponseDto);
-        }**/
+        }
         ListAppointmentSimpleResponseDto responseDto = new ListAppointmentSimpleResponseDto(list);
         return responseDto;
     }
