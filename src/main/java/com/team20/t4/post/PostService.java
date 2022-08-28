@@ -6,6 +6,7 @@ import com.team20.t4.member.MemberService;
 import com.team20.t4.member.domain.Member;
 import com.team20.t4.plan.PlanService;
 import com.team20.t4.plan.domain.Plan;
+import com.team20.t4.plan.dto.AppointmentSimpleResponseDto;
 import com.team20.t4.plan.dto.RegisterHistorySaveRequestDto;
 import com.team20.t4.post.domain.Post;
 import com.team20.t4.post.domain.PostRepository;
@@ -16,6 +17,9 @@ import com.team20.t4.post.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -64,6 +68,17 @@ public class PostService {
         // plan이 진행중이면 plan도 삭제
         // plan이 완료이면 plan은 삭제하지 않음
         postRepository.deleteById(postId);
+    }
+
+    @Transactional
+    public List<AppointmentSimpleResponseDto> getPostListWrittenByMe(){
+        Member loginedMember = memberService.getLoginedMember();
+        List<AppointmentSimpleResponseDto> responseDtoList = new ArrayList<>();
+        List<Post> postList = postRepository.findAllByWriter(loginedMember);
+        for(Post post:postList){
+            responseDtoList.add(new AppointmentSimpleResponseDto(post, post.getPlan()));
+        }
+        return responseDtoList;
     }
 
 
