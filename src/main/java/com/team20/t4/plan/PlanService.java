@@ -96,6 +96,15 @@ public class PlanService {
      * RegisterHistory 관련 CRUD
      * */
 
+    public void sendAppointmentRequestOfWriter(RegisterHistorySaveRequestDto dto) {
+        RegisterHistory historyEntity = RegisterHistory.builder()
+                .applicant(dto.getApplicant())
+                .state(State.PERMITTED)
+                .plan(dto.getPlan())
+                .build();
+        registerHistoryRepository.save(historyEntity);
+    }
+
     // 밥약 신청(RegisterHistory 생성)
     @Transactional
     public Long sendAppointmentRequest(RegisterHistorySaveRequestDto dto) {
