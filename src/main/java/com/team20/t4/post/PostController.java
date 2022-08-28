@@ -40,8 +40,8 @@ public class PostController {
         return postService.getPostListByLocation(gotLocation);
     }
 
-    @GetMapping("/post/applicants")
-    public ListMemberResponseDto getApplicants(@RequestBody Long postId){
+    @GetMapping("/post/{postId}applicants")
+    public ListMemberResponseDto getApplicants(@PathVariable Long postId){
         return postService.getPostApplicants(postId);
     }
 
