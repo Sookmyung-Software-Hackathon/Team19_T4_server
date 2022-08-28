@@ -62,4 +62,6 @@ public class MemberController {
         return new OnlyResponseString("회원 프로필 이미지 수정에 성공했습니다.");
     }
 
+
+
 }
