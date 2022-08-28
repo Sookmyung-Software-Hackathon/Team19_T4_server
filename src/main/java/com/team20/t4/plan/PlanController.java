@@ -32,8 +32,8 @@ public class PlanController {
     }
 
     @PostMapping("/plan/progress/{planId}")
-    public Long updateProgress(@PathVariable Long planId, @RequestBody Progress progress) {
-        return planService.updateProgressState(planId, progress);
+    public Long updateProgress(@PathVariable Long planId, @RequestBody UpdateProgressDto progress) {
+        return planService.updateProgressState(planId, progress.getProgress());
     }
 
     @PostMapping("/registerHistory/new")
@@ -42,7 +42,7 @@ public class PlanController {
     }
 
     @PostMapping("/registerHistory/state/{registerHistoryId}")
-    public Long updateState(@PathVariable Long registerHistoryId, @RequestBody State state) {
-        return planService.response(registerHistoryId, state);
+    public Long updateState(@PathVariable Long registerHistoryId, @RequestBody UpdateStateDto state) {
+        return planService.response(registerHistoryId, state.getState());
     }
 }

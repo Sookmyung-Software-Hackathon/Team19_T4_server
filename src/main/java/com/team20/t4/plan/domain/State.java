@@ -28,7 +28,7 @@ public enum State {
 
     @JsonValue
     public String getDefinition() {
-        return getDefinition();
+        return definition;
     }
 
 
