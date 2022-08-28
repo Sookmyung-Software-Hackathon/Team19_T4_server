@@ -16,7 +16,7 @@ public interface RegisterHistoryRepository extends JpaRepository<RegisterHistory
     List<RegisterHistory> readRegisterHistoriesByPermittedMember(@Param("applicant") Member applicant);
 
 
-    @Query("select h from RegisterHistory h where h.plan =: plan")
+    @Query("SELECT h FROM RegisterHistory h WHERE h.plan = :plan")
     List<RegisterHistory> readRegisterHistoryByPlan(@Param("plan") Plan plan);
 
     // Plan.progress != COMPLETED_PLAN 이고 State.PERMITTED인 회원의 RegisterHistory
