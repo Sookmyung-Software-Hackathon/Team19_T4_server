@@ -7,6 +7,7 @@ import com.team20.t4.member.domain.Member;
 import com.team20.t4.member.domain.MemberRepository;
 import com.team20.t4.plan.domain.*;
 import com.team20.t4.plan.dto.*;
+import com.team20.t4.post.domain.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

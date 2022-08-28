@@ -1,7 +1,6 @@
 package com.team20.t4.plan;
 
 import com.team20.t4.plan.domain.Progress;
-import com.team20.t4.plan.domain.ProgressUpdateDto;
 import com.team20.t4.plan.domain.State;
 import com.team20.t4.plan.dto.*;
 import lombok.RequiredArgsConstructor;
