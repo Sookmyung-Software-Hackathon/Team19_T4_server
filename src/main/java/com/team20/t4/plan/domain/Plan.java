@@ -76,6 +76,7 @@ public class Plan {
         this.lead = lead;
         this.post = post;
         this.numOfParticipants = numOfParticipants;
+        this.numOfPermittedMember = 1;
         this.appointmentTime = appointmentTime;
         this.foodType = foodType;
         this.restaurant = restaurant;

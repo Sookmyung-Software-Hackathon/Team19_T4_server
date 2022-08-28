@@ -106,7 +106,7 @@ public class PlanService {
 
     public void sendAppointmentRequestOfWriter(RegisterHistorySaveRequestDto dto) {
         RegisterHistory historyEntity = RegisterHistory.builder()
-                .applicant(memberRepository.findById(dto.getApplicantId()).get())
+                .applicant(memberService.getLoginedMember())
                 .state(State.PERMITTED)
                 .plan(planRepository.findById(dto.getPlanId()).get())
                 .build();
@@ -117,7 +117,7 @@ public class PlanService {
     @Transactional
     public Long sendAppointmentRequest(RegisterHistorySaveRequestDto dto) {
         RegisterHistory historyEntity = RegisterHistory.builder()
-                .applicant(memberRepository.findById(dto.getApplicantId()).get())
+                .applicant(memberService.getLoginedMember())
                 .state(State.DEFAULT)
                 .plan(planRepository.findById(dto.getPlanId()).get())
                 .build();

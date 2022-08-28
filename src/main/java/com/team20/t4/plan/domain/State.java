@@ -1,5 +1,7 @@
 package com.team20.t4.plan.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,4 +14,21 @@ public enum State {
     DENIED("거절");
 
     private String definition;
+
+    @JsonCreator
+    public static State from(String value) {
+        for (State status : State.values()) {
+            if (status.getDefinition().equals(value)) {
+                return status;
+            }
+        }
+        return null;
+    }
+
+    @JsonValue
+    public String getDefinition() {
+        return getDefinition();
+    }
+
+
 }
