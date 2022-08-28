@@ -133,6 +133,7 @@ public class PlanService {
         if (newState == State.PERMITTED) {
             Plan plan = registerHistoryEntity.getPlan();
             plan.setNumOfPermittedMember(plan.getNumOfPermittedMember()+1);
+            registerHistoryEntity.setState(newState);
         }
         //TODO: 모집인원 찼는데 수락 누르면 예외 처리
         return registerHistoryEntity.getId();

@@ -42,7 +42,7 @@ public class PlanController {
     }
 
     @PostMapping("/registerHistory/state/{registerHistoryId}")
-    public Long updateState(@PathVariable Long registerHistoryId, @RequestBody State state) {
-        return planService.response(registerHistoryId, state);
+    public Long updateState(@PathVariable Long registerHistoryId, @RequestBody StateUpdateDto state) {
+        return planService.response(registerHistoryId, state.getState());
     }
 }
