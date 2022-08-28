@@ -3,6 +3,10 @@ package com.team20.t4.post;
 import com.team20.t4.common.exception.RequestErrorCode;
 import com.team20.t4.common.exception.RequestException;
 import com.team20.t4.member.MemberService;
+import com.team20.t4.member.domain.Member;
+import com.team20.t4.plan.PlanService;
+import com.team20.t4.plan.domain.Plan;
+import com.team20.t4.plan.dto.RegisterHistorySaveRequestDto;
 import com.team20.t4.post.domain.Post;
 import com.team20.t4.post.domain.PostRepository;
 import com.team20.t4.post.dto.PostResponseDto;
@@ -18,13 +22,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostService {
     private final PostRepository postRepository;
     private final MemberService memberService;
+    private final PlanService planService;
 
     @Transactional
     public Long savePost(PostSaveRequestDto requestDto){
-        // plan을 requestDto에서 가져오기
+        Member loginedMember = memberService.getLoginedMember();
+        Plan plan = planService.createPlan(requestDto.getPlan(), loginedMember);
+        planService.sendAppointmentRequest(new RegisterHistorySaveRequestDto(loginedMember, plan));
 
         PostSaveRequestVo saveRequestVo = PostSaveRequestVo.of(requestDto);
-        saveRequestVo.updateWriter(memberService.getLoginedMember());
+        saveRequestVo.updateWriter(loginedMember);
+        saveRequestVo.updatePlan(plan);
         Post savedPost = postRepository.save(saveRequestVo.toEntity());
         return savedPost.getId();
     }

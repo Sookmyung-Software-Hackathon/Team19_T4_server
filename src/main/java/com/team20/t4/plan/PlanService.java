@@ -2,11 +2,13 @@ package com.team20.t4.plan;
 
 import com.team20.t4.common.exception.RequestErrorCode;
 import com.team20.t4.common.exception.RequestException;
+import com.team20.t4.member.MemberService;
 import com.team20.t4.member.domain.Member;
 import com.team20.t4.member.domain.MemberRepository;
 import com.team20.t4.plan.domain.*;
 import com.team20.t4.plan.dto.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,10 +16,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PlanService {
-
+    private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final PlanRepository planRepository;
 
@@ -29,10 +32,14 @@ public class PlanService {
 
     // 밥약 생성(포스트 생성과 동시에 자동 생성 = create Plan)
     @Transactional
-    public Long createPlan(PlanSaveRequestDto dto) {
+    public Plan createPlan(PlanSaveRequestDto dto, Member loginedMember) {
+
+        System.out.println("dto.getLocation().getGu()" + dto.getLocation().getGu());
+
+        dto.setLead(loginedMember);
         Plan planEntity = dto.toEntity();
-        planRepository.save(planEntity);
-        return planEntity.getId();
+
+        return planRepository.save(planEntity);
     }
 
     /**Post와 함께 Plan의 정보를 조회할 수 있는 메소드*/

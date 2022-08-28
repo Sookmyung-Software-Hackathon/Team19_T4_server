@@ -26,6 +26,7 @@ public class RegisterHistory extends BaseTimeEntity {
     @JoinColumn(name = "plan_pk")
     private Plan plan;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     @Setter
     private State state;
