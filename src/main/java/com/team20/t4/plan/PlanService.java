@@ -7,6 +7,7 @@ import com.team20.t4.member.domain.Member;
 import com.team20.t4.member.domain.MemberRepository;
 import com.team20.t4.plan.domain.*;
 import com.team20.t4.plan.dto.*;
+import com.team20.t4.post.domain.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,6 @@ public class PlanService {
     // 밥약 생성(포스트 생성과 동시에 자동 생성 = create Plan)
     @Transactional
     public Plan createPlan(PlanSaveRequestDto dto, Member loginedMember) {
-
-        System.out.println("dto.getLocation().getGu()" + dto.getLocation().getGu());
-
         dto.setLead(loginedMember);
         Plan planEntity = dto.toEntity();
 
@@ -49,15 +47,24 @@ public class PlanService {
     }
 
     @Transactional
-    public List<AppointmentPost> listMyAppointments(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND));
-        List<AppointmentPost> list = new ArrayList<>();
+    public ListAppointmentSimpleResponseDto listMyPermittedAppointments() {
+        Member loginedMember = memberService.getLoginedMember();
+        List<AppointmentSimpleResponseDto> list = new ArrayList<>();
 
-        for (RegisterHistory registerHistory : registerHistoryRepository.readRegisterHistoriesByMember(member)) {
-            list.add(new AppointmentPost(registerHistory, registerHistory.getPlan().getPost().getId()));
+        for (RegisterHistory registerHistory : registerHistoryRepository.readRegisterHistoriesByPermittedMember(loginedMember)) {
+            Plan plan = registerHistory.getPlan();
+            Post post = plan.getPost();
+            AppointmentSimpleResponseDto simpleResponseDto = new AppointmentSimpleResponseDto(post, plan);
+            // TODO : Plan에 수락된 인원 구하기 - 이거 엔티티에 넣는게 나을듯
+            simpleResponseDto.setNumOfPermittedParticipants(getNoPP(plan));
+            list.add(simpleResponseDto);
         }
-        return list;
+        ListAppointmentSimpleResponseDto responseDto = new ListAppointmentSimpleResponseDto(list);
+        return responseDto;
+    }
+
+    private Integer getNoPP(Plan plan) {
+        return 1;
     }
 
     // 밥약 시간 수정(Plan 수정)
