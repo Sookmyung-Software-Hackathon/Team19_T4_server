@@ -56,9 +56,6 @@ public class Plan {
     private List<RegisterHistory> registerHistories = new ArrayList<>();
 
 
-    @OneToMany
-    private List<Member> permittedMembers = new ArrayList<>();
-
     @Setter
     @Column(name = "progress", nullable = false)
     @Enumerated(EnumType.STRING)
