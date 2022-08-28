@@ -16,7 +16,8 @@ public class AppointmentSimpleResponseDto {
     private LocalDateTime appointmentTime;
     private String restaurant;
     private Integer numOfParticipants;
-    @Setter private Integer numOfPermittedParticipants;
+    @Setter private Integer numOfPermittedMember;
+
 
     public AppointmentSimpleResponseDto(Post post, Plan plan){
         this.postId = post.getId();
@@ -24,6 +25,7 @@ public class AppointmentSimpleResponseDto {
         this.appointmentTime = plan.getAppointmentTime();
         this.restaurant = plan.getRestaurant();
         this.numOfParticipants = plan.getNumOfParticipants();
+        this.numOfPermittedMember = plan.getNumOfPermittedMember();
     }
 
 }

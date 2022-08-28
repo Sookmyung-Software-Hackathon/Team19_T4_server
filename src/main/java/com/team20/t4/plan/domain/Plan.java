@@ -35,6 +35,10 @@ public class Plan {
     private Integer numOfParticipants;
 
     @Setter
+    @Column(name = "num_of_permitted_member", nullable = false)
+    private Integer numOfPermittedMember;
+
+    @Setter
     @Column(name = "appointment_time", nullable = false)
     private LocalDateTime appointmentTime;
 

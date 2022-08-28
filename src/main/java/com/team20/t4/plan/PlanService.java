@@ -106,9 +106,9 @@ public class PlanService {
 
     public void sendAppointmentRequestOfWriter(RegisterHistorySaveRequestDto dto) {
         RegisterHistory historyEntity = RegisterHistory.builder()
-                .applicant(dto.getApplicant())
+                .applicant(memberRepository.findById(dto.getApplicantId()).get())
                 .state(State.PERMITTED)
-                .plan(dto.getPlan())
+                .plan(planRepository.findById(dto.getPlanId()).get())
                 .build();
         registerHistoryRepository.save(historyEntity);
     }
@@ -117,9 +117,9 @@ public class PlanService {
     @Transactional
     public Long sendAppointmentRequest(RegisterHistorySaveRequestDto dto) {
         RegisterHistory historyEntity = RegisterHistory.builder()
-                .applicant(dto.getApplicant())
+                .applicant(memberRepository.findById(dto.getApplicantId()).get())
                 .state(State.DEFAULT)
-                .plan(dto.getPlan())
+                .plan(planRepository.findById(dto.getPlanId()).get())
                 .build();
         registerHistoryRepository.save(historyEntity);
         return historyEntity.getId();
@@ -131,8 +131,10 @@ public class PlanService {
                 .orElseThrow(() -> new RequestException(RequestErrorCode.NOT_FOUND));
         registerHistoryEntity.setState(newState);
         if (newState == State.PERMITTED) {
-            registerHistoryEntity.getPlan().getPermittedMembers().add(registerHistoryEntity.getApplicant());
+            Plan plan = registerHistoryEntity.getPlan();
+            plan.setNumOfPermittedMember(plan.getNumOfPermittedMember()+1);
         }
+        //TODO: 모집인원 찼는데 수락 누르면 예외 처리
         return registerHistoryEntity.getId();
     }
 

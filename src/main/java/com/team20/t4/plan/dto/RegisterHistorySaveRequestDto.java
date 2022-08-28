@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class RegisterHistorySaveRequestDto {
 
-    private Member applicant;
-    private Plan plan;
+    private Long applicantId;
+    private Long planId;
 
 }
