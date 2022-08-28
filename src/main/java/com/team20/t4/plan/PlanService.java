@@ -138,4 +138,18 @@ public class PlanService {
         return registerHistoryEntity.getId();
     }
 
+    @Transactional
+    public ListAppointmentSimpleResponseDto getScheduledPlan() {
+        Member loginedMember = memberService.getLoginedMember();
+        List<AppointmentSimpleResponseDto> list = new ArrayList<>();
+
+        for (RegisterHistory registerHistory : registerHistoryRepository.readRegisterHistoriesByPermittedMemberAndOnProcess(loginedMember)) {
+            Plan plan = registerHistory.getPlan();
+            Post post = plan.getPost();
+            AppointmentSimpleResponseDto simpleResponseDto = new AppointmentSimpleResponseDto(post, plan);
+            list.add(simpleResponseDto);
+        }
+        ListAppointmentSimpleResponseDto responseDto = new ListAppointmentSimpleResponseDto(list);
+        return responseDto;
+    }
 }
